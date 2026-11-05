@@ -6,7 +6,7 @@
 //
 //  WHAT TO EDIT WHERE
 //  ------------------------------------------------------------------
-//    1. GROUP        group name, tagline, about text and research focus areas
+//    1. GROUP        group name, tagline, home page text (hero, about, research areas), team banner
 //    2. SUPERVISOR   supervisor's details, short bio and photo (rarely changes)
 //    3. MEMBERS      add yourself here (name, role, photo)
 //    4. PAPERS       4A ongoing papers   |   4B published papers
@@ -52,14 +52,47 @@ window.SITE = {
       // "Topic one",
       // "Topic two"
     ],
-    // Short paragraph shown in the "About" section of the home page.
-    about: "We are a research group in the Department of Electrical and Electronic Engineering at United International University. Our work focuses on low-voltage, low-power circuit design, with an emphasis on analog front-end circuits for wearable applications.",
-    // Research focus areas shown as cards on the home page. Add or remove entries freely (3 looks best).
-    areas: [
-      { title: "Low-Power Analog Circuits", text: "Designing analog building blocks that operate at very low supply voltage and power." },
-      { title: "Wearable Front-Ends", text: "Circuits that acquire and condition signals for compact, battery-powered wearable devices." },
-      { title: "Low-Voltage Circuit Design", text: "Techniques such as current reuse that keep performance up while supply voltage goes down." }
+    // ---- Home page: hero slider (3 slides work best). title "" = use the group name. ----
+    heroSlides: [
+      { intro: "welcome to", title: "", text: "Department of Electrical and Electronic Engineering, United International University", button: "Learn more", link: "#about" },
+      { intro: "our research", title: "Low-power analog circuits", text: "Low-voltage, low-power analog circuit design for wearable front-end applications.", button: "Explore research", link: "ongoing.html" },
+      { intro: "meet our", title: "Research team", text: "The supervisor and members of the group.", button: "Meet the team", link: "team.html" }
     ],
+
+    // ---- Home page: About section ----
+    aboutHeadline: "Designing low-power analog circuits for wearable electronics",
+    about: [
+      "We are a research group in the Department of Electrical and Electronic Engineering at United International University. Our work focuses on low-voltage, low-power circuit design, with an emphasis on analog front-end circuits for wearable applications.",
+      "Our members work together on circuit design and analysis, from the first idea and simulation through to writing up the results for publication.",
+      "Explore our ongoing research, meet our team members, and read our publications on this website."
+    ],
+
+    // ---- Home page: "Our Research" section ----
+    researchIntro: "Our research centres on low-voltage, low-power analog circuit design. The main topics are:",
+    // Cards link to the Ongoing Research page. "image" is optional: a file name inside the "images" folder.
+    areas: [
+      { title: "Low-Power Analog Circuits", text: "Designing analog building blocks that operate at very low supply voltage and power.", image: "" },
+      { title: "Wearable Front-Ends", text: "Circuits that acquire and condition signals for compact, battery-powered wearable devices.", image: "" },
+      { title: "Low-Voltage Circuit Design", text: "Techniques such as current reuse that keep performance up while supply voltage goes down.", image: "" }
+    ],
+
+    // ---- Home page: "Affiliations" (logos are optional: a file name inside "images") ----
+    affiliations: [
+      { name: "United International University", logo: "", url: "https://www.uiu.ac.bd" },
+      { name: "Department of Electrical and Electronic Engineering", logo: "", url: "" }
+    ],
+
+    // ---- Home page: "Join the group" box next to the contact details ----
+    join: {
+      title: "Join the Group",
+      text: "We welcome motivated students and researchers who are interested in low-power circuit design. If you would like to join, please get in touch with the supervisor.",
+      button: "Get in touch"
+    },
+
+    // ---- Team page banner ----
+    teamSubtitle: "Researchers working on low-power analog circuit design.",
+    teamBanner: "",           // optional banner photo: a file name inside "images" (e.g. "team.jpg")
+
     // Optional, off for now:
     showWhere: false          // true = show "Department..., University" above the title
   },
@@ -75,7 +108,12 @@ window.SITE = {
     department: "Department of Electrical and Electronic Engineering",
     university: "United International University",
     email: "iqbal@eee.uiu.ac.bd",
-    bio: "Professor in the Department of Electrical and Electronic Engineering, United International University, and supervisor of this research group.",
+    // bio can be one string or a list of paragraphs (like the Team page of a lab website).
+    bio: [
+      "Professor in the Department of Electrical and Electronic Engineering, United International University, and supervisor of this research group."
+    ],
+    // Optional link buttons on the Team page, e.g. { label: "Google Scholar", url: "https://..." }
+    links: [],
     photo: "ibcsir.jpg"       // file inside the "images" folder
   },
 
@@ -84,14 +122,15 @@ window.SITE = {
   //  3. MEMBERS  (the supervisor is added automatically at the top)
   //     Only "name" is required. role, bio, interest and photo can be "".
   //     "bio" is a short biography shown on the Team page (falls back to "interest").
-  //     Optional: status: "alumni" moves the person to the Alumni list.
+  //     Optional: links: [{ label: "ORCID", url: "https://..." }] adds link buttons to the profile.
+  //     Optional: status: "alumni" moves the person to the Alumni list (name and role only).
   // ========================================================================
   members: [
 
     // ---- Add new members ABOVE the template below (keep the comma) ----
 
     // Template - copy it up here, then delete the // at the start of each line:
-    // { name: "Full name", role: "Research student", bio: "Two or three lines about the member.", interest: "One line about their research", photo: "full-name.jpg" },
+    // { name: "Full name", role: "Research student", bio: "Two or three lines about the member.", links: [], interest: "One line about their research", photo: "full-name.jpg" },
 
   ],
 

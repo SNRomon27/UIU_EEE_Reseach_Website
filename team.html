@@ -33,39 +33,58 @@
   </header>
 
   <main id="main">
-    <section class="page-intro">
-      <div class="wrap">
-        <h1 id="h-team">Our team</h1>
-        <p class="section-note" id="team-intro">Meet the people behind the research.</p>
-      </div>
-    </section>
+    <section class="tp-section">
+      <div class="wrap tp-wrap">
+        <div class="tp-hero" id="tp-hero">
+          <div class="tp-hero-bg" id="tp-hero-bg"></div>
+          <div class="tp-hero-sc"></div>
+          <div class="tp-hero-b">
+            <p class="tp-eyebrow" id="tp-eyebrow"></p>
+            <h1 class="tp-title">Meet the team</h1>
+            <p class="tp-sub" id="tp-sub"></p>
+          </div>
+        </div>
 
-    <section class="team-group" aria-labelledby="h-sup">
-      <div class="wrap">
-        <h2 id="h-sup" class="sr-only">Supervisor</h2>
-        <ul class="profile-list" id="pi-list"></ul>
-      </div>
-    </section>
+        <div id="tp-feat"></div>
 
-    <section class="team-group" id="members" aria-labelledby="h-members">
-      <div class="wrap">
-        <h2 id="h-members">Members</h2>
-        <ul class="profile-list" id="member-list"></ul>
-      </div>
-    </section>
+        <h2 class="sr-only">Members</h2>
+        <div class="tp-grid" id="tp-grid"></div>
 
-    <section class="team-group team-page-end" id="alumni-section" aria-labelledby="h-alumni" hidden>
-      <div class="wrap">
-        <h2 id="h-alumni">Alumni</h2>
-        <ul class="profile-list" id="alumni-list"></ul>
+        <div class="tp-alumni" id="tp-alumni" hidden>
+          <h2 class="tp-h2">Alumni</h2>
+          <div class="tp-alum" id="tp-alum"></div>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap footer-inner">
-      <p id="footer-contact"></p>
-      <p id="footer-updated"></p>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-cols">
+        <div class="fcol fcol-brand">
+          <p class="footer-title" id="f-brand">Research Group</p>
+          <p class="fmuted" id="f-tagline"></p>
+        </div>
+        <div class="fcol">
+          <p class="footer-title">Research</p>
+          <a href="ongoing.html">Ongoing Research</a>
+          <a href="publications.html">Publications</a>
+        </div>
+        <div class="fcol">
+          <p class="footer-title">The group</p>
+          <a href="index.html">Home</a>
+          <a href="team.html">Team</a>
+          <a href="index.html#about">About us</a>
+        </div>
+        <div class="fcol">
+          <p class="footer-title">Contact us</p>
+          <p class="fmuted" id="f-contact"></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p id="f-copy"></p>
+        <p id="f-updated"></p>
+      </div>
     </div>
   </footer>
 

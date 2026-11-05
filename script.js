@@ -94,6 +94,7 @@
   }
 
   var pi = D.pi;
+  var has = function (sel) { return !!$(sel); };
   var page = document.body.getAttribute("data-page");
 
   /* ---------- Old single-page links keep working ----------
@@ -157,48 +158,130 @@
     });
   }
 
+  /* ---------- Small helpers for the new pages ---------- */
+  function paras(v) { return Array.isArray(v) ? v.filter(Boolean) : (v ? [v] : []); }
+  function safeHref(u) {
+    u = String(u || "").trim();
+    return /^(https?:\/\/|#|[\w\-\/]+\.html(#[\w\-]*)?$)/i.test(u) ? u : "";
+  }
+  function imgSrc(file) {
+    return /^[\w.\- ]+$/.test(String(file || "")) ? "images/" + encodeURI(file) : "";
+  }
+  var reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
   /* ---------- Home page ---------- */
   if (page === "home") {
-    $("#hero-where").textContent = pi.department + ", " + pi.university;
-    $("#hero-title").textContent = D.group.name;
-    $("#hero-tagline").textContent = D.group.tagline || "";
-    if (D.group.showWhere !== true) { $("#hero-where").hidden = true; }
-    if (D.group.interests && D.group.interests.length) {
-      $("#hero-interests").textContent = "Research interests: " + D.group.interests.join(", ") + ".";
+    var G = D.group;
+
+    /* Hero slider */
+    var slides = (G.heroSlides || []).filter(visible);
+    if (!slides.length) {
+      slides = [{ intro: "welcome to", title: "", text: pi.department + ", " + pi.university, button: "Learn more", link: "#about" }];
+    }
+    var slider = $("#hero-slider"), dotsBox = $("#hero-dots");
+    var slideNodes = [], dotNodes = [], cur = 0, timer = null, paused = reduced;
+    slides.forEach(function (sl, i) {
+      var href = safeHref(sl.link);
+      var node = el("div", { class: "hero-slide" + (i === 0 ? " is-active" : ""), role: "group", "aria-roledescription": "slide", "aria-label": (i + 1) + " of " + slides.length }, [
+        sl.intro ? el("p", { class: "hero-intro", text: sl.intro }) : null,
+        el(i === 0 ? "h1" : "h2", { class: "hero-title", text: sl.title || G.name }),
+        sl.text ? el("p", { class: "hero-text", text: sl.text }) : null,
+        sl.button && href ? el("a", { class: "btn btn-primary", href: href, text: sl.button }) : null
+      ]);
+      slideNodes.push(node);
+      slider.appendChild(node);
+      var dot = el("button", { class: "hero-dot", type: "button", "aria-label": "Show slide " + (i + 1) });
+      dot.addEventListener("click", function () { show(i); restart(); });
+      dotNodes.push(dot);
+      dotsBox.appendChild(dot);
+    });
+    function show(i) {
+      cur = (i + slideNodes.length) % slideNodes.length;
+      slideNodes.forEach(function (n, k) { n.classList.toggle("is-active", k === cur); });
+      dotNodes.forEach(function (d, k) { if (k === cur) { d.setAttribute("aria-current", "true"); } else { d.removeAttribute("aria-current"); } });
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function restart() { stop(); if (!paused && slideNodes.length > 1) { timer = setInterval(function () { show(cur + 1); }, 7000); } }
+    show(0);
+    var pauseBtn = $("#hero-pause");
+    function syncPause() {
+      pauseBtn.classList.toggle("is-paused", paused);
+      pauseBtn.setAttribute("aria-label", paused ? "Play slides" : "Pause slides");
+    }
+    if (slideNodes.length < 2) {
+      $("#hero-controls").hidden = true;
     } else {
-      $("#hero-interests").hidden = true;
+      $("#hero-prev").addEventListener("click", function () { show(cur - 1); restart(); });
+      $("#hero-next").addEventListener("click", function () { show(cur + 1); restart(); });
+      pauseBtn.addEventListener("click", function () { paused = !paused; syncPause(); restart(); });
+      var hero = $("#top");
+      hero.addEventListener("mouseenter", stop);
+      hero.addEventListener("mouseleave", restart);
+      hero.addEventListener("focusin", stop);
+      hero.addEventListener("focusout", restart);
+      document.addEventListener("visibilitychange", function () { if (document.hidden) { stop(); } else { restart(); } });
+      syncPause();
+      restart();
     }
 
-    var stat = function (n, label) {
-      return el("div", { class: "stat" }, [el("div", { class: "stat-num", text: String(n) }), el("div", { class: "stat-label", text: label })]);
-    };
-    $("#stats").appendChild(stat(ongoing.length, "Ongoing projects"));
-    $("#stats").appendChild(stat(published.length, "Publications"));
-    $("#stats").appendChild(stat(members.length + 1, "Team members"));
+    /* Stats over the hero, each block links to its page, numbers count up */
+    var statBox = $("#stats");
+    [
+      { n: published.length, title: "Publications", desc: "Sharing our findings with the research community.", href: "publications.html" },
+      { n: members.length + 1, title: "Research members", desc: "Researchers working on low-power analog circuits.", href: "team.html" },
+      { n: ongoing.length, title: "Ongoing projects", desc: "Active research that is currently in progress.", href: "ongoing.html" }
+    ].forEach(function (st) {
+      var num = el("span", { class: "count", text: String(st.n) });
+      statBox.appendChild(el("a", { class: "hero-stat", href: st.href }, [
+        el("div", { class: "hero-stat-num" }, [num, st.n > 0 ? el("span", { class: "plus", text: "+" }) : null]),
+        el("div", { class: "hero-stat-title", text: st.title }),
+        el("p", { class: "hero-stat-desc", text: st.desc })
+      ]));
+      if (st.n > 1 && !reduced && "IntersectionObserver" in window) {
+        num.textContent = "0";
+        var io = new IntersectionObserver(function (entries) {
+          if (!entries[0].isIntersecting) { return; }
+          io.disconnect();
+          var t0 = null;
+          (function tick(t) {
+            if (t0 === null) { t0 = t; }
+            var k = Math.min((t - t0) / 1000, 1);
+            num.textContent = String(Math.round(st.n * k));
+            if (k < 1) { requestAnimationFrame(tick); }
+          })(performance.now());
+        });
+        io.observe(num);
+      }
+    });
 
-    var about = $("#about-body");
-    about.appendChild(el("p", { text: D.group.about || D.group.tagline || "" }));
-    $("#sup-card").appendChild(el("div", { class: "sup-card" }, [
-      avatar(pi.name, pi.photo),
-      el("span", { class: "sup-label", text: "Supervisor" }),
-      el("h3", { text: pi.name }),
-      el("p", { text: pi.title }),
-      el("p", { text: pi.department })
-    ]));
+    /* About */
+    $("#h-about").textContent = G.name;
+    $("#about-lead").textContent = G.aboutHeadline || G.tagline || "";
+    paras(G.about).forEach(function (t) { $("#about-body").appendChild(el("p", { text: t })); });
+    $("#about-sup").appendChild(document.createTextNode("Supervisor: "));
+    $("#about-sup").appendChild(el("a", { href: "team.html", text: pi.name }));
+    $("#about-sup").appendChild(document.createTextNode(", " + pi.title));
 
-    var areaBox = $("#areas");
-    var areas = (D.group.areas || []).filter(visible);
+    /* Our Research: topic blocks that link to the Ongoing Research page */
+    var areas = (G.areas || []).filter(visible);
     if (!areas.length) { $("#focus").hidden = true; }
-    areas.forEach(function (a, i) {
-      areaBox.appendChild(el("article", { class: "area" }, [
-        el("div", { class: "area-num", "aria-hidden": "true", text: String(i + 1) }),
-        el("h3", { text: a.title }),
-        a.text ? el("p", { text: a.text }) : null
+    $("#research-intro").textContent = G.researchIntro || "";
+    if (!G.researchIntro) { $("#research-intro").hidden = true; }
+    areas.forEach(function (ar, i) {
+      var src = imgSrc(ar.image);
+      var media = el("div", { class: "area-media", "aria-hidden": "true" }, [
+        src ? el("img", { src: src, alt: "", loading: "lazy" }) : el("span", { class: "area-num", text: String(i + 1) })
+      ]);
+      var im = media.querySelector("img");
+      if (im) { im.addEventListener("error", function () { media.textContent = ""; media.appendChild(el("span", { class: "area-num", text: String(i + 1) })); }); }
+      $("#areas").appendChild(el("a", { class: "area", href: "ongoing.html" }, [
+        media,
+        el("div", { class: "area-body" }, [el("h3", { text: ar.title }), ar.text ? el("p", { text: ar.text }) : null])
       ]));
     });
 
+    /* Ongoing + latest publications previews */
     ongoingCards($("#ongoing-list"), ongoing.slice(0, 3));
-
     var pubBox = $("#pub-preview");
     var recent = published.slice().sort(function (a, b) { return b.year - a.year; }).slice(0, 3);
     if (!recent.length) {
@@ -219,20 +302,34 @@
       pubBox.appendChild(ul);
     }
 
-    var strip = $("#team-strip");
-    strip.appendChild(el("li", { class: "team-chip" }, [
-      avatar(pi.name, pi.photo), el("h3", { text: pi.name }), el("p", { text: pi.title })
-    ]));
-    members.filter(function (m) { return m.status !== "alumni"; }).slice(0, 11).forEach(function (m) {
-      strip.appendChild(el("li", { class: "team-chip" }, [
-        avatar(m.name, m.photo), el("h3", { text: m.name }), m.role ? el("p", { text: m.role }) : null
-      ]));
+    /* Affiliations */
+    var affs = (G.affiliations || []).filter(visible);
+    if (!affs.length) { $("#affiliations").hidden = true; }
+    affs.forEach(function (af) {
+      var url = safeUrl(af.url), src = imgSrc(af.logo);
+      var inner = src ? el("img", { src: src, alt: af.name || "" }) : document.createTextNode(af.name || "");
+      var item = url
+        ? el("a", { href: url, target: "_blank", rel: "noopener" }, [inner])
+        : el("span", { class: "affil-item" }, [inner]);
+      var im = item.querySelector && item.querySelector("img");
+      if (im) { im.addEventListener("error", function () { item.textContent = af.name || ""; }); }
+      $("#affil-list").appendChild(el("li", {}, [item]));
     });
 
+    /* Contact + join */
+    $("#c-name").textContent = pi.name + ", " + pi.title;
     if (pi.email) {
-      $("#cta-btn").textContent = "Email the supervisor";
-      $("#cta-btn").setAttribute("href", "mailto:" + pi.email);
+      $("#c-mail").textContent = pi.email;
+      $("#c-mail").setAttribute("href", "mailto:" + pi.email);
+    } else {
+      $("#c-mail").hidden = true;
     }
+    $("#c-addr").textContent = pi.department + ", " + pi.university;
+    var J = G.join || {};
+    $("#h-join").textContent = J.title || "Join the Group";
+    $("#join-text").textContent = J.text || "";
+    $("#join-btn").textContent = J.button || "Get in touch";
+    $("#join-btn").setAttribute("href", pi.email ? "mailto:" + pi.email : "team.html");
   }
 
   /* ---------- Ongoing research page ---------- */
@@ -263,57 +360,92 @@
     });
   }
 
-  /* ---------- Team page ---------- */
-  function photoBox(name, photo) {
-    var box = el("div", { class: "profile-photo", "aria-hidden": "true" });
-    var fallback = function () { box.textContent = initials(name); };
-    if (photo) {
-      var img = el("img", { src: "images/" + photo, alt: "", loading: "lazy" });
-      img.addEventListener("error", function () { box.textContent = ""; fallback(); });
+  /* ---------- Team page (TERRER-style profiles) ---------- */
+  function tpPhoto(name, photo) {
+    var src = imgSrc(photo);
+    var box = el("div", { class: "tp-photo", "aria-hidden": "true" });
+    var ph = function () { box.className = "tp-ph"; box.textContent = initials(name); };
+    if (src) {
+      var img = el("img", { src: src, alt: "", loading: "lazy" });
+      img.addEventListener("error", function () { box.textContent = ""; ph(); });
       box.appendChild(img);
     } else {
-      fallback();
+      ph();
     }
     return box;
   }
-  function profile(o) {
-    return el("li", { class: "profile" + (o.lead ? " is-lead" : "") }, [
-      photoBox(o.name, o.photo),
-      el("div", { class: "profile-body" }, [
-        el("h3", { text: o.name }),
-        o.role ? el("p", { class: "profile-role", text: o.role }) : null,
-        o.sub ? el("p", { class: "profile-sub", text: o.sub }) : null,
-        o.bio ? el("p", { class: "profile-bio", text: o.bio }) : null,
-        o.email ? el("p", { class: "profile-contact" }, [el("a", { href: "mailto:" + o.email, text: o.email })]) : null
-      ])
-    ]);
+  function pillRow(list, email) {
+    var items = (list || []).map(function (l) {
+      var url = safeUrl(l && l.url);
+      return url ? el("a", { class: "tp-link", href: url, target: "_blank", rel: "noopener", text: l.label || "Link" }) : null;
+    });
+    if (email) { items.unshift(el("a", { class: "tp-link", href: "mailto:" + email, text: "Email" })); }
+    items = items.filter(Boolean);
+    return items.length ? el("div", { class: "tp-links" }, items) : null;
   }
+  function bioParas(v) { return paras(v).map(function (t) { return el("p", { class: "tp-bio", text: t }); }); }
+
   if (page === "team") {
-    $("#pi-list").appendChild(profile({
-      lead: true, name: pi.name, role: pi.title,
-      sub: pi.department + ", " + pi.university, bio: pi.bio, email: pi.email, photo: pi.photo
-    }));
+    var G2 = D.group;
+    $("#tp-eyebrow").textContent = G2.name + " · " + pi.university;
+    $("#tp-sub").textContent = G2.teamSubtitle || "";
+    if (!G2.teamSubtitle) { $("#tp-sub").hidden = true; }
+    var banner = imgSrc(G2.teamBanner);
+    if (banner) { $("#tp-hero-bg").style.backgroundImage = "url('" + banner + "')"; }
+
+    $("#tp-feat").appendChild(el("div", { class: "tp-feat" }, [
+      tpPhoto(pi.name, pi.photo),
+      el("div", { class: "tp-feat-b" }, [
+        el("h2", { class: "tp-name", text: pi.name }),
+        el("div", { class: "tp-role", text: pi.title + ", " + pi.department }),
+        el("div", {}, bioParas(pi.bio)),
+        pillRow(pi.links, pi.email)
+      ])
+    ]));
+
     var current = members.filter(function (m) { return m.status !== "alumni"; });
     var alumni = members.filter(function (m) { return m.status === "alumni"; });
-    var memberBox = $("#member-list");
+    var grid = $("#tp-grid");
     if (!current.length) {
-      memberBox.appendChild(el("li", { class: "empty", text: "Group members will be listed here soon." }));
+      grid.appendChild(el("p", { class: "empty", text: "Group members will be listed here soon." }));
     }
     current.forEach(function (m) {
-      memberBox.appendChild(profile({ name: m.name, role: m.role, bio: m.bio || m.interest, photo: m.photo }));
+      grid.appendChild(el("article", { class: "tp-card" }, [
+        tpPhoto(m.name, m.photo),
+        el("div", { class: "tp-card-b" }, [
+          el("h3", { class: "tp-name", text: m.name }),
+          m.role ? el("div", { class: "tp-role", text: m.role }) : null,
+          el("div", {}, bioParas(m.bio || m.interest)),
+          pillRow(m.links)
+        ])
+      ]));
     });
     if (alumni.length) {
-      $("#alumni-section").hidden = false;
+      $("#tp-alumni").hidden = false;
       alumni.forEach(function (m) {
-        $("#alumni-list").appendChild(profile({ name: m.name, role: m.role, bio: m.bio || m.interest, photo: m.photo }));
+        $("#tp-alum").appendChild(el("span", {}, [m.name, m.role ? el("em", { text: " · " + m.role }) : null]));
       });
     }
   }
 
   /* ---------- Footer ---------- */
-  $("#footer-contact").textContent = "Contact: " + pi.name + (pi.email ? ", " + pi.email : "");
-  $("#footer-updated").textContent = "Last updated " + formatDate(D.lastUpdated);
-
+  if (has("#f-brand")) {
+    $("#f-brand").textContent = D.group.name;
+    $("#f-tagline").textContent = D.group.tagline || "";
+    $("#f-contact").appendChild(document.createTextNode(pi.name));
+    $("#f-contact").appendChild(el("br"));
+    if (pi.email) {
+      $("#f-contact").appendChild(el("a", { href: "mailto:" + pi.email, text: pi.email }));
+      $("#f-contact").appendChild(el("br"));
+    }
+    $("#f-contact").appendChild(document.createTextNode(pi.department + ", " + pi.university));
+    $("#f-copy").textContent = "© " + new Date().getFullYear() + " | " + D.group.name + " | " + pi.university;
+    $("#f-updated").textContent = "Last updated " + formatDate(D.lastUpdated);
+  }
+  if (has("#footer-contact")) {
+    $("#footer-contact").textContent = "Contact: " + pi.name + (pi.email ? ", " + pi.email : "");
+    $("#footer-updated").textContent = "Last updated " + formatDate(D.lastUpdated);
+  }
   /* ---------- In-page links ----------
      Scroll with JavaScript so the menu and buttons also work inside sandboxed
      previews, where plain #links do nothing. */

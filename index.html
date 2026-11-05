@@ -33,42 +33,32 @@
   </header>
 
   <main id="main">
-    <section class="hero-home" id="top">
-      <div class="wrap">
-        <p class="eyebrow" id="hero-where">Department of Electrical and Electronic Engineering</p>
-        <h1 id="hero-title">Research Group</h1>
-        <p class="hero-tagline" id="hero-tagline"></p>
-        <p class="hero-interests" id="hero-interests"></p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="ongoing.html">Explore our research</a>
-          <a class="btn btn-ghost" href="team.html">Meet the team</a>
+    <section class="hero-home" id="top" role="region" aria-roledescription="carousel" aria-label="Highlights">
+      <div class="hero-stage">
+        <div class="hero-slider" id="hero-slider"></div>
+        <div class="wrap hero-controls" id="hero-controls">
+          <div class="hero-dots" id="hero-dots"></div>
+          <button class="hero-pause" id="hero-pause" type="button" aria-label="Pause slides"></button>
+          <button class="hero-arrow hero-prev" id="hero-prev" type="button" aria-label="Previous slide"></button>
+          <button class="hero-arrow hero-next" id="hero-next" type="button" aria-label="Next slide"></button>
         </div>
       </div>
-    </section>
-
-    <section class="stats" aria-label="At a glance">
-      <div class="wrap stats-grid" id="stats"></div>
+      <div class="wrap hero-stats" id="stats"></div>
     </section>
 
     <section class="section" id="about" aria-labelledby="h-about">
-      <div class="wrap about-grid">
-        <div class="about-text">
-          <h2 id="h-about">About the group</h2>
-          <div id="about-body"></div>
-          <a class="btn btn-primary" href="team.html">Our team</a>
-        </div>
-        <div id="sup-card"></div>
+      <div class="wrap about-wrap">
+        <h2 class="title-bar" id="h-about">About</h2>
+        <p class="about-lead" id="about-lead"></p>
+        <div class="about-body" id="about-body"></div>
+        <p class="about-sup" id="about-sup"></p>
       </div>
     </section>
 
     <section class="section section-alt" id="focus" aria-labelledby="h-focus">
       <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2 id="h-focus">Research focus</h2>
-            <p class="section-note">The main themes behind our work.</p>
-          </div>
-        </div>
+        <h2 class="title-bar" id="h-focus">Our Research</h2>
+        <p class="about-lead" id="research-intro"></p>
         <div class="areas" id="areas"></div>
       </div>
     </section>
@@ -99,34 +89,60 @@
       </div>
     </section>
 
-    <section class="section" id="team" aria-labelledby="h-team">
+    <section class="section" id="affiliations" aria-labelledby="h-affil">
       <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2 id="h-team">Our team</h2>
-            <p class="section-note">The people behind the research.</p>
-          </div>
-          <a class="link-arrow" href="team.html">Full team</a>
-        </div>
-        <ul class="team-strip" id="team-strip"></ul>
+        <h2 class="title-bar" id="h-affil">Affiliations</h2>
+        <ul class="affil" id="affil-list"></ul>
       </div>
     </section>
 
-    <section class="cta-band" aria-labelledby="h-cta">
-      <div class="wrap cta-inner">
-        <div>
-          <h2 id="h-cta">Interested in our research?</h2>
-          <p id="cta-text">Get in touch with the group to learn more or to discuss collaboration.</p>
+    <section class="section section-alt" id="contact" aria-labelledby="h-contact">
+      <div class="wrap cta-grid">
+        <div class="cta-col">
+          <h2 class="title-bar" id="h-contact">Contact Us</h2>
+          <div class="contact-block">
+            <p class="contact-small">By Email</p>
+            <p class="contact-name" id="c-name"></p>
+            <p><a class="contact-mail" id="c-mail" href="#"></a></p>
+            <p class="contact-addr" id="c-addr"></p>
+          </div>
         </div>
-        <a class="btn btn-primary" id="cta-btn" href="team.html">Contact us</a>
+        <div class="cta-col">
+          <h2 class="title-bar" id="h-join">Join the Group</h2>
+          <p class="join-text" id="join-text"></p>
+          <a class="btn btn-primary" id="join-btn" href="team.html">Get in touch</a>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap footer-inner">
-      <p id="footer-contact"></p>
-      <p id="footer-updated"></p>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-cols">
+        <div class="fcol fcol-brand">
+          <p class="footer-title" id="f-brand">Research Group</p>
+          <p class="fmuted" id="f-tagline"></p>
+        </div>
+        <div class="fcol">
+          <p class="footer-title">Research</p>
+          <a href="ongoing.html">Ongoing Research</a>
+          <a href="publications.html">Publications</a>
+        </div>
+        <div class="fcol">
+          <p class="footer-title">The group</p>
+          <a href="index.html">Home</a>
+          <a href="team.html">Team</a>
+          <a href="index.html#about">About us</a>
+        </div>
+        <div class="fcol">
+          <p class="footer-title">Contact us</p>
+          <p class="fmuted" id="f-contact"></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p id="f-copy"></p>
+        <p id="f-updated"></p>
+      </div>
     </div>
   </footer>
 

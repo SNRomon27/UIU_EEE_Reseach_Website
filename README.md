@@ -6,10 +6,10 @@ The site has four pages. All of them are built from `data.js`:
 
 | Page | File | Content |
 |------|------|---------|
-| Home | `index.html` | Hero, about, research focus, ongoing research, latest publications, team preview |
+| Home | `index.html` | Sliding banner with live counters, about, our research, ongoing research, latest publications, affiliations, contact and join box |
 | Research -> Ongoing Research | `ongoing.html` | Ongoing papers |
 | Research -> Publications | `publications.html` | Published papers, grouped by year |
-| Team | `team.html` | Supervisor and members with photo, designation and biography |
+| Team | `team.html` | Banner, featured supervisor profile, member profiles (photo, name, designation, biography, links) and alumni |
 
 ---
 
@@ -137,7 +137,15 @@ Changes only appear on the live site after they are merged into the branch selec
 - Required: `name` for a member; `type` and `title` for a paper; `year` as well for a published paper.
 - When a paper is published: change `type` to `"published"`, delete `status` and `description`, and add `venue`, `pages` and `year`.
 - To move a member to the Alumni list on the Team page, add `status: "alumni"` to their entry.
-- The home page shows the group's `about` text and `areas` (research focus cards). Edit them in the `GROUP` section of `data.js`.
+- **Home page text** lives in the `GROUP` section of `data.js`:
+  - `heroSlides`: the sliding banner at the top (small intro line, title, text, button label and button link).
+  - `aboutHeadline` and `about`: the About section (`about` is a list of paragraphs).
+  - `researchIntro` and `areas`: the "Our Research" blocks. Each block can have an optional `image` (a file in the `images` folder).
+  - `affiliations`: the Affiliations row (an optional `logo` file in the `images` folder and an optional `url`).
+  - `join`: the "Join the Group" box next to the contact details.
+  - The three counters over the banner (Publications, Research members, Ongoing projects) are counted automatically.
+- **Team page** text: `teamSubtitle` and an optional `teamBanner` photo (a file in the `images` folder) in the `GROUP` section; the supervisor's `bio` (one text or a list of paragraphs) and `links` in the `SUPERVISOR` section; each member's `bio` and `links` in the `MEMBERS` section.
+- To add link buttons (for example ORCID or Google Scholar) to a profile: `links: [{ label: "ORCID", url: "https://orcid.org/..." }]`.
 
 ---
 
