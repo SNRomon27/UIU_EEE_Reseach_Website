@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ongoing Research | Research Group</title>
+  <meta name="description" content="Ongoing research of the research group.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Spectral:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="ongoing">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="index.html" id="brand">Research Group</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle menu"><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <div class="has-sub">
+          <a href="ongoing.html" aria-current="page">Research</a>
+          <button class="sub-toggle" type="button" aria-expanded="false" aria-label="Show Research submenu"></button>
+          <ul class="submenu">
+            <li><a href="ongoing.html" aria-current="page">Ongoing Research</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </div>
+        <a href="team.html">Team</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section" id="ongoing" aria-labelledby="h-ongoing">
+      <div class="wrap">
+        <h2 id="h-ongoing">Ongoing research</h2>
+        <p class="section-note">Work in progress. Details are kept brief until publication.</p>
+        <div class="cards" id="ongoing-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <p id="footer-contact"></p>
+      <p id="footer-updated"></p>
+    </div>
+  </footer>
+
+  <noscript><p class="wrap noscript">Please turn on JavaScript to see the research list.</p></noscript>
+  <script>
+    // If data.js has a mistake, remember where, so the page can point to it.
+    window.addEventListener("error", function (e) {
+      if (e.filename && /data\.js/.test(e.filename) && !window.__dataError) {
+        window.__dataError = { line: e.lineno, message: e.message };
+      }
+    });
+  </script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

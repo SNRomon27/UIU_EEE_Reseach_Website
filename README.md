@@ -1,27 +1,35 @@
-# Research Group Page
+# Research Group Website
 
-**শুধু `data.js` edit করবেন। বাকি file ছোঁবেন না।**
-Only edit `data.js`. Do not touch the other files.
+**Only edit `data.js`. Do not touch the other files.**
+
+The site has four pages. All of them are built from `data.js`:
+
+| Page | File | Content |
+|------|------|---------|
+| Home | `index.html` | Hero, about, research focus, ongoing research, latest publications, team preview |
+| Research → Ongoing Research | `ongoing.html` | Ongoing papers |
+| Research → Publications | `publications.html` | Published papers, grouped by year |
+| Team | `team.html` | Supervisor and members with photo, designation and biography |
 
 ---
 
-## কীভাবে edit করবেন (How to edit)
+## How to edit
 
-1. GitHub-এ repo খুলুন → **`data.js`** → ✏️ (pencil) চাপুন।
-2. নিজের অংশ খুঁজুন (বড় `=====` banner দেখুন):
+1. Open the repository on GitHub → **`data.js`** → click the pencil icon (✏️).
+2. Find your section (look for the large `=====` banners):
    `3. MEMBERS` · `4A. ONGOING PAPERS` · `4B. PUBLISHED PAPERS`
-3. অংশের নিচের **Template**-টা copy করে, Template-এর **ঠিক ওপরে** paste করুন। তারপর প্রতি লাইনের শুরু থেকে `//` মুছুন।
-4. ওপরের `lastUpdated` আজকের তারিখ করুন: `"YYYY-MM-DD"`।
-5. **Commit changes** চাপুন → **Create a new branch and start a pull request** বেছে নিন।
-6. Admin approve ও merge করলে ১-২ মিনিটে page বদলাবে।
+3. Copy the **Template** at the bottom of the section and paste it **just above** the Template. Then delete the `//` at the start of every pasted line.
+4. Set `lastUpdated` at the top to today's date: `"YYYY-MM-DD"`.
+5. Click **Commit changes** → choose **Create a new branch and start a pull request**.
+6. When the admin approves and merges, the page updates in 1-2 minutes.
 
 ---
 
-## Copy-paste করার block
+## Copy-paste blocks
 
 **Member**
 ```js
-{ name: "Full name", role: "Research student", interest: "One line about your research", photo: "full-name.jpg" },
+{ name: "Full name", role: "Research student", bio: "Two or three lines about the member.", interest: "One line about your research", photo: "full-name.jpg" },
 ```
 
 **Ongoing paper**
@@ -49,42 +57,44 @@ Only edit `data.js`. Do not touch the other files.
 },
 ```
 
-- যা লাগবে না তা ফাঁকা রাখুন: `""` অথবা `[]`। Field মুছবেন না।
-- বাধ্যতামূলক: member-এ `name`; paper-এ `type` ও `title`; published-এ `year`-ও।
-- Paper published হলে: `type` বদলে `"published"` করুন, `status` ও `description` মুছুন, `venue`, `pages`, `year` যোগ করুন।
+- Leave anything you do not need empty: `""` or `[]`. Do not delete the field.
+- Required: `name` for a member; `type` and `title` for a paper; `year` as well for a published paper.
+- When a paper is published: change `type` to `"published"`, delete `status` and `description`, and add `venue`, `pages` and `year`.
+- To move a member to the Alumni list on the Team page, add `status: "alumni"` to their entry.
+- The home page shows the group's `about` text and `areas` (research focus cards). Edit them in the `GROUP` section of `data.js`.
 
 ---
 
-## ছবি যোগ করা (Add a photo)
+## Adding a photo
 
-1. চৌকো ছবি, ৫০০ KB-এর নিচে। নাম ছোট হাতের অক্ষরে, space ছাড়া: `rahim-hasan.jpg`।
-2. Repo-র **`images`** folder → **Add file → Upload files** → **Commit changes**।
-3. `data.js`-এ **হুবহু একই নাম** লিখুন: `photo: "rahim-hasan.jpg"`।
+1. Use a square photo under 500 KB. Use a lowercase name with no spaces: `rahim-hasan.jpg`.
+2. In the repository, open the **`images`** folder → **Add file → Upload files** → **Commit changes**.
+3. In `data.js`, write **exactly the same file name**: `photo: "rahim-hasan.jpg"`.
 
-ছবি না এলে নামের বানান মেলেনি (`.JPG` আর `.jpg` আলাদা)। তখন নামের initials দেখায়।
-
----
-
-## নিয়ম (Rules)
-
-- Repo **public**। যা সবাই দেখলে সমস্যা নেই, শুধু তা-ই লিখুন।
-- Ongoing paper-এ শুধু title আর ১-২ লাইনের সাধারণ বিবরণ। Method বা result নয়।
-- ব্যক্তিগত ফোন নম্বর বা email নয়।
-- `" "`, `,` আর `{ } [ ]` উদাহরণের মতোই রাখুন। একটা কমা বাদ গেলে পুরো page ভেঙে যায়।
-- অন্যের ছবি দেওয়ার আগে তার অনুমতি নিন।
+If the photo does not appear, the file name does not match (`.JPG` and `.jpg` are different). The person's initials are shown instead.
 
 ---
 
-## Page-এ "The page content could not be loaded" দেখালে
+## Rules
 
-`data.js`-এ ভুল আছে। বার্তায় লাইন নম্বর লেখা থাকে, ওই লাইন বা তার ঠিক ওপরে দেখুন (সাধারণত কমা বা `"` বাদ গেছে)।
-না পারলে: `data.js` → **History** → আগের কাজের version খুলে restore করুন।
+- The repository is **public**. Write only what is fine for everyone to see.
+- For an ongoing paper, write only the title and one or two general lines. No methods or results.
+- No personal phone numbers or personal email addresses.
+- Keep `" "`, `,` and `{ } [ ]` exactly as in the examples. One missing comma can break the whole page.
+- Ask for permission before using someone else's photo.
 
 ---
 
-## Admin-এর জন্য
+## If the page shows "The page content could not be loaded"
 
-- **Member যোগ:** repo → Settings → **Collaborators and teams** → **Add people** → role **Write**।
-- **Approval নিয়ম:** Settings → **Rules → Rulesets → New branch ruleset** → default branch target → **Require a pull request before merging** (approvals: 1)।
-- **Page চালু:** Settings → **Pages** → branch `main`, folder `/ (root)`।
-- **University domain পেলে:** Settings → Pages → **Custom domain** → **Enforce HTTPS**। `CNAME` file মুছবেন না।
+There is a mistake in `data.js`. Look at the line mentioned in the message, or just above it (usually a missing comma or `"`).
+If you cannot find it: `data.js` → **History** → open the previous working version and restore it.
+
+---
+
+## For the admin
+
+- **Add a member:** repository → Settings → **Collaborators and teams** → **Add people** → role **Write**.
+- **Approval rule:** Settings → **Rules → Rulesets → New branch ruleset** → target the default branch → **Require a pull request before merging** (approvals: 1).
+- **Publish the site:** Settings → **Pages** → branch `main`, folder `/ (root)`.
+- **When a university domain is available:** Settings → Pages → **Custom domain** → **Enforce HTTPS**. Do not delete the `CNAME` file.

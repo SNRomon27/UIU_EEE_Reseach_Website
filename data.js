@@ -1,13 +1,13 @@
 // ==========================================================================
-//  DATA FILE  -  এই file-ই পুরো page-এর content
+//  DATA FILE  -  this file holds the content of the whole site
 //  This is the ONLY file group members need to edit.
-//  (Design files: index.html, style.css, script.js. Please do not edit them.)
+//  (Design files: the .html pages, style.css and script.js. Please do not edit them.)
 // ==========================================================================
 //
-//  কোথায় কী করবেন / WHAT TO EDIT WHERE
+//  WHAT TO EDIT WHERE
 //  ------------------------------------------------------------------
-//    1. GROUP        group name and the one-line description at the top
-//    2. SUPERVISOR   Sir's details and photo (rarely changes)
+//    1. GROUP        group name, tagline, about text and research focus areas
+//    2. SUPERVISOR   supervisor's details, short bio and photo (rarely changes)
 //    3. MEMBERS      add yourself here (name, role, photo)
 //    4. PAPERS       4A ongoing papers   |   4B published papers
 //
@@ -47,10 +47,18 @@ window.SITE = {
   // ========================================================================
   group: {
     name: "Research Group",   // change when the group name is decided, e.g. "Semiconductor Devices Research Group"
-    tagline: "Ongoing and published research from the Department of Electrical and Electronic Engineering,UIU.",
+    tagline: "Ongoing and published research from the Department of Electrical and Electronic Engineering, UIU.",
     interests: [
       // "Topic one",
       // "Topic two"
+    ],
+    // Short paragraph shown in the "About" section of the home page.
+    about: "We are a research group in the Department of Electrical and Electronic Engineering at United International University. Our work focuses on low-voltage, low-power circuit design, with an emphasis on analog front-end circuits for wearable applications.",
+    // Research focus areas shown as cards on the home page. Add or remove entries freely (3 looks best).
+    areas: [
+      { title: "Low-Power Analog Circuits", text: "Designing analog building blocks that operate at very low supply voltage and power." },
+      { title: "Wearable Front-Ends", text: "Circuits that acquire and condition signals for compact, battery-powered wearable devices." },
+      { title: "Low-Voltage Circuit Design", text: "Techniques such as current reuse that keep performance up while supply voltage goes down." }
     ],
     // Optional, off for now:
     showWhere: false          // true = show "Department..., University" above the title
@@ -67,20 +75,23 @@ window.SITE = {
     department: "Department of Electrical and Electronic Engineering",
     university: "United International University",
     email: "iqbal@eee.uiu.ac.bd",
+    bio: "Professor in the Department of Electrical and Electronic Engineering, United International University, and supervisor of this research group.",
     photo: "ibcsir.jpg"       // file inside the "images" folder
   },
 
 
   // ========================================================================
   //  3. MEMBERS  (the supervisor is added automatically at the top)
-  //     Only "name" is required. role, interest and photo can be "".
+  //     Only "name" is required. role, bio, interest and photo can be "".
+  //     "bio" is a short biography shown on the Team page (falls back to "interest").
+  //     Optional: status: "alumni" moves the person to the Alumni list.
   // ========================================================================
   members: [
 
     // ---- Add new members ABOVE the template below (keep the comma) ----
 
     // Template - copy it up here, then delete the // at the start of each line:
-    // { name: "Full name", role: "Research student", interest: "One line about their research", photo: "full-name.jpg" },
+    // { name: "Full name", role: "Research student", bio: "Two or three lines about the member.", interest: "One line about their research", photo: "full-name.jpg" },
 
   ],
 

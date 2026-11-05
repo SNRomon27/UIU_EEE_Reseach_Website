@@ -4,59 +4,121 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Research Group</title>
-  <meta name="description" content="Ongoing research and publications of the research group.">
+  <meta name="description" content="Ongoing research, publications and team of the research group in the Department of Electrical and Electronic Engineering, UIU.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Spectral:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="home">
   <a class="skip" href="#main">Skip to content</a>
 
   <header class="topbar">
     <div class="wrap topbar-inner">
-      <nav aria-label="Sections">
-        <a href="#ongoing">Ongoing<span class="more"> research</span></a>
-        <a href="#published">Published<span class="more"> papers</span></a>
-        <a href="#members">Members</a>
+      <a class="brand" href="index.html" id="brand">Research Group</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle menu"><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="index.html" aria-current="page">Home</a>
+        <div class="has-sub">
+          <a href="ongoing.html">Research</a>
+          <button class="sub-toggle" type="button" aria-expanded="false" aria-label="Show Research submenu"></button>
+          <ul class="submenu">
+            <li><a href="ongoing.html">Ongoing Research</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </div>
+        <a href="team.html">Team</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="top">
-      <div class="wrap hero-grid">
-        <div class="hero-text">
-          <p class="hero-where" id="hero-where"></p>
-          <h1 id="hero-title">Research Group</h1>
-          <p class="hero-tagline" id="hero-tagline"></p>
-          <p class="hero-interests" id="hero-interests"></p>
-          <p class="hero-super" id="hero-super"></p>
+    <section class="hero-home" id="top">
+      <div class="wrap">
+        <p class="eyebrow" id="hero-where">Department of Electrical and Electronic Engineering</p>
+        <h1 id="hero-title">Research Group</h1>
+        <p class="hero-tagline" id="hero-tagline"></p>
+        <p class="hero-interests" id="hero-interests"></p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="ongoing.html">Explore our research</a>
+          <a class="btn btn-ghost" href="team.html">Meet the team</a>
         </div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="At a glance">
+      <div class="wrap stats-grid" id="stats"></div>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="h-about">
+      <div class="wrap about-grid">
+        <div class="about-text">
+          <h2 id="h-about">About the group</h2>
+          <div id="about-body"></div>
+          <a class="btn btn-primary" href="team.html">Our team</a>
+        </div>
+        <div id="sup-card"></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="focus" aria-labelledby="h-focus">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2 id="h-focus">Research focus</h2>
+            <p class="section-note">The main themes behind our work.</p>
+          </div>
+        </div>
+        <div class="areas" id="areas"></div>
       </div>
     </section>
 
     <section class="section" id="ongoing" aria-labelledby="h-ongoing">
       <div class="wrap">
-        <h2 id="h-ongoing">Ongoing research</h2>
-        <p class="section-note">Work in progress. Details are kept brief until publication.</p>
+        <div class="section-head">
+          <div>
+            <h2 id="h-ongoing">Ongoing research</h2>
+            <p class="section-note">Work in progress. Details are kept brief until publication.</p>
+          </div>
+          <a class="link-arrow" href="ongoing.html">All ongoing research</a>
+        </div>
         <div class="cards" id="ongoing-list"></div>
       </div>
     </section>
 
-    <section class="section section-alt" id="published" aria-labelledby="h-published">
+    <section class="section section-alt" id="publications" aria-labelledby="h-pubs">
       <div class="wrap">
-        <h2 id="h-published">Published papers</h2>
-        <p class="section-note">Earlier publications from the group.</p>
-        <div id="published-list"></div>
+        <div class="section-head">
+          <div>
+            <h2 id="h-pubs">Publications</h2>
+            <p class="section-note">Recent papers from the group.</p>
+          </div>
+          <a class="link-arrow" href="publications.html">All publications</a>
+        </div>
+        <div id="pub-preview"></div>
       </div>
     </section>
 
-    <section class="section" id="members" aria-labelledby="h-members">
+    <section class="section" id="team" aria-labelledby="h-team">
       <div class="wrap">
-        <h2 id="h-members">Members</h2>
-        <div id="pi-card"></div>
-        <ul class="people" id="member-list"></ul>
+        <div class="section-head">
+          <div>
+            <h2 id="h-team">Our team</h2>
+            <p class="section-note">The people behind the research.</p>
+          </div>
+          <a class="link-arrow" href="team.html">Full team</a>
+        </div>
+        <ul class="team-strip" id="team-strip"></ul>
+      </div>
+    </section>
+
+    <section class="cta-band" aria-labelledby="h-cta">
+      <div class="wrap cta-inner">
+        <div>
+          <h2 id="h-cta">Interested in our research?</h2>
+          <p id="cta-text">Get in touch with the group to learn more or to discuss collaboration.</p>
+        </div>
+        <a class="btn btn-primary" id="cta-btn" href="team.html">Contact us</a>
       </div>
     </section>
   </main>
