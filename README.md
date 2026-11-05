@@ -7,20 +7,96 @@ The site has four pages. All of them are built from `data.js`:
 | Page | File | Content |
 |------|------|---------|
 | Home | `index.html` | Hero, about, research focus, ongoing research, latest publications, team preview |
-| Research → Ongoing Research | `ongoing.html` | Ongoing papers |
-| Research → Publications | `publications.html` | Published papers, grouped by year |
+| Research -> Ongoing Research | `ongoing.html` | Ongoing papers |
+| Research -> Publications | `publications.html` | Published papers, grouped by year |
 | Team | `team.html` | Supervisor and members with photo, designation and biography |
+
+---
+
+## How to open the website (step by step)
+
+The site is plain HTML, CSS and JavaScript. It needs no build step and no installation. Choose **Option A** (quickest), **Option B** (recommended for reviewing changes) or **Option C** (the live site on GitHub Pages).
+
+### Option A: Open it directly from your computer
+
+1. Open the repository on GitHub: `https://github.com/SNRomon27/UIU_EEE_Reseach_Website`.
+2. Click the branch menu (it says `main`) and select the branch you want to review, for example `claude/inspiring-mendel-d98utv`.
+3. Click the green **Code** button -> **Download ZIP**.
+4. Open the downloaded ZIP file and **extract** it to a folder. Do not open the site from inside the ZIP.
+5. Open the extracted folder and double-click **`index.html`**. It opens in your web browser.
+6. Use the top menu (**Home**, **Research**, **Team**) to move between pages. Hover over **Research** to see **Ongoing Research** and **Publications**.
+
+Note: the site loads its fonts from Google Fonts, so an internet connection gives the best look. Without it, the page still works with fallback fonts.
+
+### Option B: Run a local web server (recommended)
+
+A local server behaves exactly like the real website and is the best way to test every page.
+
+1. Install **Git** and **Python 3** if you do not have them (both are free).
+2. Open a terminal (Command Prompt, PowerShell or Terminal) and download the project:
+
+   ```bash
+   git clone https://github.com/SNRomon27/UIU_EEE_Reseach_Website.git
+   ```
+
+3. Go into the project folder:
+
+   ```bash
+   cd UIU_EEE_Reseach_Website
+   ```
+
+4. Switch to the branch you want to review (skip this step to view `main`):
+
+   ```bash
+   git checkout claude/inspiring-mendel-d98utv
+   ```
+
+5. Start the local server:
+
+   ```bash
+   python3 -m http.server 8000
+   ```
+
+   On Windows, use `python -m http.server 8000` if `python3` is not found.
+6. Open your browser and go to **http://localhost:8000**.
+7. Check the pages:
+   - Home: `http://localhost:8000/index.html`
+   - Ongoing Research: `http://localhost:8000/ongoing.html`
+   - Publications: `http://localhost:8000/publications.html`
+   - Team: `http://localhost:8000/team.html`
+8. To test phone and tablet layouts, press **F12** in the browser, then click the **device toolbar** icon (or press **Ctrl+Shift+M**) and pick a device size.
+9. When you finish, go back to the terminal and press **Ctrl+C** to stop the server.
+
+After you edit `data.js` or any other file, save it and refresh the browser page (**Ctrl+R**, or **Ctrl+Shift+R** to bypass the cache).
+
+### Option C: Open the live website on GitHub Pages
+
+1. Open the repository on GitHub and go to **Settings** -> **Pages**.
+2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
+3. Choose the branch (`main` for the published site, or a review branch to preview changes) and the folder **`/ (root)`**, then click **Save**.
+4. Wait 1-2 minutes, then refresh the Pages settings screen. A banner shows the site address:
+   `https://snromon27.github.io/UIU_EEE_Reseach_Website/`
+5. Open that address in your browser.
+
+Changes only appear on the live site after they are merged into the branch selected in step 3.
+
+### Troubleshooting
+
+- **Blank page or "The page content could not be loaded":** `data.js` has a mistake, usually a missing comma or quote. See the section below.
+- **Styles look broken:** you probably opened a single file from inside the ZIP. Extract the whole ZIP first, so `style.css`, `script.js` and `data.js` sit next to the HTML files.
+- **A photo does not show:** check that the file name in `data.js` matches the file in the `images` folder exactly, including capital and small letters.
+- **`localhost:8000` does not load:** make sure the terminal is still running the server, and that you ran the command from inside the project folder.
 
 ---
 
 ## How to edit
 
-1. Open the repository on GitHub → **`data.js`** → click the pencil icon (✏️).
+1. Open the repository on GitHub -> **`data.js`** -> click the pencil icon.
 2. Find your section (look for the large `=====` banners):
-   `3. MEMBERS` · `4A. ONGOING PAPERS` · `4B. PUBLISHED PAPERS`
+   `3. MEMBERS` | `4A. ONGOING PAPERS` | `4B. PUBLISHED PAPERS`
 3. Copy the **Template** at the bottom of the section and paste it **just above** the Template. Then delete the `//` at the start of every pasted line.
 4. Set `lastUpdated` at the top to today's date: `"YYYY-MM-DD"`.
-5. Click **Commit changes** → choose **Create a new branch and start a pull request**.
+5. Click **Commit changes** -> choose **Create a new branch and start a pull request**.
 6. When the admin approves and merges, the page updates in 1-2 minutes.
 
 ---
@@ -68,7 +144,7 @@ The site has four pages. All of them are built from `data.js`:
 ## Adding a photo
 
 1. Use a square photo under 500 KB. Use a lowercase name with no spaces: `rahim-hasan.jpg`.
-2. In the repository, open the **`images`** folder → **Add file → Upload files** → **Commit changes**.
+2. In the repository, open the **`images`** folder -> **Add file -> Upload files** -> **Commit changes**.
 3. In `data.js`, write **exactly the same file name**: `photo: "rahim-hasan.jpg"`.
 
 If the photo does not appear, the file name does not match (`.JPG` and `.jpg` are different). The person's initials are shown instead.
@@ -88,13 +164,13 @@ If the photo does not appear, the file name does not match (`.JPG` and `.jpg` ar
 ## If the page shows "The page content could not be loaded"
 
 There is a mistake in `data.js`. Look at the line mentioned in the message, or just above it (usually a missing comma or `"`).
-If you cannot find it: `data.js` → **History** → open the previous working version and restore it.
+If you cannot find it: `data.js` -> **History** -> open the previous working version and restore it.
 
 ---
 
 ## For the admin
 
-- **Add a member:** repository → Settings → **Collaborators and teams** → **Add people** → role **Write**.
-- **Approval rule:** Settings → **Rules → Rulesets → New branch ruleset** → target the default branch → **Require a pull request before merging** (approvals: 1).
-- **Publish the site:** Settings → **Pages** → branch `main`, folder `/ (root)`.
-- **When a university domain is available:** Settings → Pages → **Custom domain** → **Enforce HTTPS**. Do not delete the `CNAME` file.
+- **Add a member:** repository -> Settings -> **Collaborators and teams** -> **Add people** -> role **Write**.
+- **Approval rule:** Settings -> **Rules -> Rulesets -> New branch ruleset** -> target the default branch -> **Require a pull request before merging** (approvals: 1).
+- **Publish the site:** Settings -> **Pages** -> branch `main`, folder `/ (root)`.
+- **When a university domain is available:** Settings -> Pages -> **Custom domain** -> **Enforce HTTPS**. Do not delete the `CNAME` file.
