@@ -8,7 +8,7 @@ The site has four pages. All of them are built from `data.js`:
 |------|------|---------|
 | Home | `index.html` | Sliding banner with live counters, about, our research, ongoing research, latest publications, affiliations, contact and join box |
 | Research -> Ongoing Research | `ongoing.html` | Ongoing papers |
-| Research -> Publications | `publications.html` | Published papers, grouped by year |
+| Research -> Publications | `publications.html` | Published papers as cards (same style as Ongoing Research), newest first |
 | Team | `team.html` | Banner, featured supervisor profile, member profiles (photo, name, designation, biography, links) and alumni |
 
 ---

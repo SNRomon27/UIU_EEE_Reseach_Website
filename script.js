@@ -160,6 +160,29 @@
     });
   }
 
+  // Published papers use the same card as ongoing research: picture, year badge, title, venue, links, authors.
+  function publicationCards(box, list) {
+    if (!list.length) {
+      box.appendChild(el("p", { class: "empty", text: "The group's first publications will be listed here once they are published." }));
+    }
+    list.forEach(function (p) {
+      var venue = [p.venue, p.pages].filter(Boolean).join(", ");
+      var cardImg = imgSrc(p.image);
+      box.appendChild(el("article", { class: "card" }, [
+        cardImg ? el("img", { class: "card-media", src: cardImg, alt: "", loading: "lazy" }) : null,
+        p.year ? el("span", { class: "status status-year", text: String(p.year) }) : null,
+        el("h3", { text: p.title }),
+        venue ? el("p", { class: "card-desc", text: venue }) : null,
+        links(p.links, "card-links"),
+        el("p", { class: "card-authors" }, [authorList(p.authors)])
+      ]));
+    });
+  }
+  // Newest year first; papers from the same year keep the order of data.js.
+  var publishedSorted = published.map(function (p, i) { return { p: p, i: i }; })
+    .sort(function (a, b) { return (b.p.year - a.p.year) || (a.i - b.i); })
+    .map(function (x) { return x.p; });
+
   /* ---------- Small helpers for the new pages ---------- */
   function paras(v) { return Array.isArray(v) ? v.filter(Boolean) : (v ? [v] : []); }
   function safeHref(u) {
@@ -288,27 +311,7 @@
 
     /* Ongoing + latest publications previews */
     ongoingCards($("#ongoing-list"), ongoing.slice(0, 3));
-    var pubBox = $("#pub-preview");
-    var recent = published.slice().sort(function (a, b) { return b.year - a.year; }).slice(0, 3);
-    if (!recent.length) {
-      pubBox.appendChild(el("p", { class: "empty", text: "The group's first publications will be listed here once they are published." }));
-    } else {
-      var ul = el("ul", { class: "pub-preview" });
-      recent.forEach(function (p) {
-        var venue = [p.venue, p.pages].filter(Boolean).join(", ");
-        var pthumb = imgSrc(p.image);
-        ul.appendChild(el("li", { class: pthumb ? "has-thumb" : "" }, [
-          el("div", { class: "year", text: p.year }),
-          el("div", {}, [
-            el("p", { class: "pub-title", text: p.title }),
-            el("p", { class: "pub-authors" }, [authorList(p.authors)]),
-            venue ? el("p", { class: "pub-venue", text: venue }) : null
-          ]),
-          pthumb ? el("img", { class: "pub-thumb", src: pthumb, alt: "", loading: "lazy" }) : null
-        ]));
-      });
-      pubBox.appendChild(ul);
-    }
+    publicationCards($("#pub-preview"), publishedSorted.slice(0, 3));
 
     /* Affiliations */
     var affs = (G.affiliations || []).filter(visible);
@@ -345,31 +348,9 @@
     ongoingCards($("#ongoing-list"), ongoing);
   }
 
-  /* ---------- Publications page (published papers, grouped by year) ---------- */
+  /* ---------- Publications page (same card style as Ongoing Research) ---------- */
   if (page === "publications") {
-    var pubList = $("#published-list");
-    if (!published.length) {
-      pubList.appendChild(el("p", { class: "empty", text: "The group's first publications will be listed here once they are published." }));
-    }
-    var years = {};
-    published.forEach(function (p) { (years[p.year] = years[p.year] || []).push(p); });
-    Object.keys(years).sort(function (a, b) { return b - a; }).forEach(function (y) {
-      var list = el("ul", { class: "pub-list" });
-      years[y].forEach(function (p) {
-        var venue = [p.venue, p.pages].filter(Boolean).join(", ");
-        var thumb = imgSrc(p.image);
-        var text = [
-          el("p", { class: "pub-title", text: p.title }),
-          el("p", { class: "pub-authors" }, [authorList(p.authors)]),
-          venue ? el("p", { class: "pub-venue", text: venue }) : null,
-          links(p.links, "pub-links")
-        ];
-        list.appendChild(thumb
-          ? el("li", { class: "has-thumb" }, [el("img", { class: "pub-thumb", src: thumb, alt: "", loading: "lazy" }), el("div", {}, text)])
-          : el("li", {}, text));
-      });
-      pubList.appendChild(el("div", { class: "year-group" }, [el("div", { class: "year", text: y }), list]));
-    });
+    publicationCards($("#published-list"), publishedSorted);
   }
 
   /* ---------- Team page (TERRER-style profiles) ---------- */

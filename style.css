@@ -357,12 +357,6 @@ a:hover { text-decoration-thickness: 2px; }
 .area h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
 .area p { color: var(--muted); font-size: 0.95rem; }
 
-/* ---------- Home: publications preview ---------- */
-.pub-preview { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
-.pub-preview li { padding: 18px 22px; display: grid; grid-template-columns: 64px 1fr; gap: 4px 18px; border-top: 1px solid var(--line); }
-.pub-preview li:first-child { border-top: 0; }
-.pub-preview .year { font-size: 1.15rem; padding-top: 1px; }
-
 /* ---------- Home: affiliations ---------- */
 .affil { list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 16px 20px; align-items: center; }
 .affil a, .affil span.affil-item {
@@ -483,17 +477,15 @@ a:hover { text-decoration-thickness: 2px; }
   .tp-grid { grid-template-columns: 1fr; }
   .footer-cols { grid-template-columns: 1fr; }
   .hero-slide .btn { width: 100%; justify-content: center; }
-  .pub-preview li { grid-template-columns: 1fr; }
   .section-head { align-items: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-slide { transition: none; transform: none; }
 }
 
-/* ---------- Optional pictures on publications (only entries with an "image") ---------- */
-.pub-list li.has-thumb { display: grid; grid-template-columns: 190px 1fr; gap: 6px 22px; align-items: start; }
-.pub-thumb { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); background: var(--slate); }
-.pub-preview li.has-thumb { grid-template-columns: 64px 1fr 170px; align-items: start; }
+/* Publication cards reuse the ongoing-research card; the badge shows the year instead of a status */
+.status-year::before { display: none; }
+.status-year { padding: 3px 13px; letter-spacing: 0.02em; }
 
 /* ---------- Team: LinkedIn / UIU profile icons ---------- */
 .tp-icons { display: flex; gap: 10px; margin-top: 14px; }
@@ -514,8 +506,6 @@ a.tp-icon:hover { background: var(--amber-btn); color: #1a0f05; transform: trans
 .tp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 720px) {
   .tp-grid { grid-template-columns: 1fr; }
-  .pub-list li.has-thumb { grid-template-columns: 1fr; }
-  .pub-preview li.has-thumb { grid-template-columns: 1fr; }
 }
 
 /* A lone ongoing card with a picture: picture on the left, text on the right (wide screens) */
