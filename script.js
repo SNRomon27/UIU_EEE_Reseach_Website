@@ -148,7 +148,9 @@
       box.appendChild(el("p", { class: "empty", text: "Ongoing research will be listed here soon." }));
     }
     list.forEach(function (p) {
+      var cardImg = imgSrc(p.image);
       box.appendChild(el("article", { class: "card" }, [
+        cardImg ? el("img", { class: "card-media", src: cardImg, alt: "", loading: "lazy" }) : null,
         p.status ? el("span", { class: "status", text: p.status }) : null,
         el("h3", { text: p.title }),
         p.description ? el("p", { class: "card-desc", text: p.description }) : null,
@@ -172,6 +174,10 @@
   /* ---------- Home page ---------- */
   if (page === "home") {
     var G = D.group;
+
+    /* Hero background picture (chip design) */
+    var heroImg = imgSrc(G.heroImage);
+    if (heroImg) { $("#top").style.setProperty("--hero-img", "url('" + heroImg + "')"); }
 
     /* Hero slider */
     var slides = (G.heroSlides || []).filter(visible);
@@ -290,13 +296,15 @@
       var ul = el("ul", { class: "pub-preview" });
       recent.forEach(function (p) {
         var venue = [p.venue, p.pages].filter(Boolean).join(", ");
-        ul.appendChild(el("li", {}, [
+        var pthumb = imgSrc(p.image);
+        ul.appendChild(el("li", { class: pthumb ? "has-thumb" : "" }, [
           el("div", { class: "year", text: p.year }),
           el("div", {}, [
             el("p", { class: "pub-title", text: p.title }),
             el("p", { class: "pub-authors" }, [authorList(p.authors)]),
             venue ? el("p", { class: "pub-venue", text: venue }) : null
-          ])
+          ]),
+          pthumb ? el("img", { class: "pub-thumb", src: pthumb, alt: "", loading: "lazy" }) : null
         ]));
       });
       pubBox.appendChild(ul);
@@ -349,12 +357,16 @@
       var list = el("ul", { class: "pub-list" });
       years[y].forEach(function (p) {
         var venue = [p.venue, p.pages].filter(Boolean).join(", ");
-        list.appendChild(el("li", {}, [
+        var thumb = imgSrc(p.image);
+        var text = [
           el("p", { class: "pub-title", text: p.title }),
           el("p", { class: "pub-authors" }, [authorList(p.authors)]),
           venue ? el("p", { class: "pub-venue", text: venue }) : null,
           links(p.links, "pub-links")
-        ]));
+        ];
+        list.appendChild(thumb
+          ? el("li", { class: "has-thumb" }, [el("img", { class: "pub-thumb", src: thumb, alt: "", loading: "lazy" }), el("div", {}, text)])
+          : el("li", {}, text));
       });
       pubList.appendChild(el("div", { class: "year-group" }, [el("div", { class: "year", text: y }), list]));
     });
@@ -383,6 +395,39 @@
     items = items.filter(Boolean);
     return items.length ? el("div", { class: "tp-links" }, items) : null;
   }
+  var SVG_NS = "http://www.w3.org/2000/svg";
+  var ICONS = {
+    linkedin: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
+    uiu: "M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"
+  };
+  function iconSvg(kind) {
+    var svg = document.createElementNS(SVG_NS, "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    var path = document.createElementNS(SVG_NS, "path");
+    path.setAttribute("d", ICONS[kind]);
+    svg.appendChild(path);
+    return svg;
+  }
+  // LinkedIn icon for everyone; UIU icon too when the person has a "uiu" field (faculty).
+  // An empty address shows a greyed-out icon so the spot is ready to be filled in.
+  function profileIcons(o) {
+    var kinds = [["linkedin", "LinkedIn", o.linkedin]];
+    if (Object.prototype.hasOwnProperty.call(o, "uiu")) { kinds.push(["uiu", "UIU profile", o.uiu]); }
+    return el("div", { class: "tp-icons" }, kinds.map(function (k) {
+      var url = safeUrl(k[2]);
+      var label = k[1] + " of " + o.name;
+      if (url) {
+        var a = el("a", { class: "tp-icon is-" + k[0], href: url, target: "_blank", rel: "noopener", "aria-label": label, title: k[1] });
+        a.appendChild(iconSvg(k[0]));
+        return a;
+      }
+      var off = el("span", { class: "tp-icon is-off", role: "img", "aria-label": label + " (not added yet)", title: k[1] + " (not added yet)" });
+      off.appendChild(iconSvg(k[0]));
+      return off;
+    }));
+  }
   function bioParas(v) { return paras(v).map(function (t) { return el("p", { class: "tp-bio", text: t }); }); }
 
   if (page === "team") {
@@ -399,6 +444,7 @@
         el("h2", { class: "tp-name", text: pi.name }),
         el("div", { class: "tp-role", text: pi.title + ", " + pi.department }),
         el("div", {}, bioParas(pi.bio)),
+        profileIcons({ name: pi.name, linkedin: pi.linkedin, uiu: pi.uiu }),
         pillRow(pi.links, pi.email)
       ])
     ]));
@@ -416,6 +462,7 @@
           el("h3", { class: "tp-name", text: m.name }),
           m.role ? el("div", { class: "tp-role", text: m.role }) : null,
           el("div", {}, bioParas(m.bio || m.interest)),
+          profileIcons(m),
           pillRow(m.links)
         ])
       ]));

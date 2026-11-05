@@ -144,7 +144,13 @@ Changes only appear on the live site after they are merged into the branch selec
   - `affiliations`: the Affiliations row (an optional `logo` file in the `images` folder and an optional `url`).
   - `join`: the "Join the Group" box next to the contact details.
   - The three counters over the banner (Publications, Research members, Ongoing projects) are counted automatically.
-- **Team page** text: `teamSubtitle` and an optional `teamBanner` photo (a file in the `images` folder) in the `GROUP` section; the supervisor's `bio` (one text or a list of paragraphs) and `links` in the `SUPERVISOR` section; each member's `bio` and `links` in the `MEMBERS` section.
+- **Pictures:** put the picture file in the `images` folder and write its exact file name in `data.js`.
+  - `heroImage` (GROUP section): the chip-design picture behind the home page banner.
+  - `image` on each ongoing paper, published paper and research area: the picture shown with it. It is optional.
+  - `teamBanner`: the picture behind "Meet the team". The supplied `team-banner.svg` is an illustration; replace it with a real team photo (for example `team.jpg`).
+- **Team page** text: `teamSubtitle` in the `GROUP` section; the supervisor's `bio` (one text or a list of paragraphs) in the `SUPERVISOR` section; each member's `bio` in the `MEMBERS` section.
+- **Profile icons:** every profile shows a LinkedIn icon (`linkedin: "https://www.linkedin.com/in/..."`). The supervisor also has a UIU profile icon (`uiu`). An empty address shows a greyed-out icon.
+- **Placeholders:** `Member Name 1` to `Member Name 6` and the sample published paper are placeholders. Replace them with real information.
 - To add link buttons (for example ORCID or Google Scholar) to a profile: `links: [{ label: "ORCID", url: "https://orcid.org/..." }]`.
 
 ---

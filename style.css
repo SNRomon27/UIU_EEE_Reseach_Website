@@ -170,6 +170,8 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .card h3 { font-size: 1.25rem; font-weight: 600; }
 .card-desc { color: var(--ink); }
+.card { overflow: hidden; }
+.card-media { display: block; width: calc(100% + 44px); margin: -22px -22px 4px; height: 210px; object-fit: cover; background: var(--slate); }
 .card-authors { color: var(--muted); font-size: 0.92rem; margin-top: auto; }
 .card-links { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.92rem; font-weight: 600; }
 
@@ -281,6 +283,8 @@ a:hover { text-decoration-thickness: 2px; }
 .hero-home {
   position: relative; color: #fff; overflow: hidden;
   background:
+    linear-gradient(90deg, rgba(11, 20, 28, 0.9) 0%, rgba(11, 20, 28, 0.62) 50%, rgba(11, 20, 28, 0.15) 100%),
+    var(--hero-img, none) center right / cover no-repeat,
     radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.07) 1.2px, transparent 1.4px) 0 0 / 26px 26px,
     radial-gradient(circle at 82% 18%, rgba(245, 130, 32, 0.28), transparent 46%),
     linear-gradient(135deg, #1d2b38 0%, #0f1b27 100%);
@@ -347,6 +351,7 @@ a:hover { text-decoration-thickness: 2px; }
 .area-media { aspect-ratio: 16 / 9; background: linear-gradient(135deg, var(--slate), #0f1b27); display: grid; place-items: center; position: relative; overflow: hidden; }
 .area-media::after { content: ""; position: absolute; inset: auto -30px -50px auto; width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(245, 130, 32, 0.55), transparent 70%); }
 .area-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.area-media:has(img)::after { display: none; }
 .area-num { font-family: var(--serif); font-weight: 700; font-size: 3.4rem; color: #fff; opacity: 0.92; position: relative; z-index: 1; }
 .area-body { padding: 20px 22px 22px; }
 .area h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
@@ -483,4 +488,44 @@ a:hover { text-decoration-thickness: 2px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-slide { transition: none; transform: none; }
+}
+
+/* ---------- Optional pictures on publications (only entries with an "image") ---------- */
+.pub-list li.has-thumb { display: grid; grid-template-columns: 190px 1fr; gap: 6px 22px; align-items: start; }
+.pub-thumb { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); background: var(--slate); }
+.pub-preview li.has-thumb { grid-template-columns: 64px 1fr 170px; align-items: start; }
+
+/* ---------- Team: LinkedIn / UIU profile icons ---------- */
+.tp-icons { display: flex; gap: 10px; margin-top: 14px; }
+.tp-icon {
+  width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--slate); color: #fff; text-decoration: none; transition: transform 0.15s, background 0.15s;
+}
+.tp-icon svg { width: 17px; height: 17px; fill: currentColor; display: block; }
+a.tp-icon:hover { background: var(--amber-btn); color: #1a0f05; transform: translateY(-2px); text-decoration: none; }
+.tp-icon.is-off { background: var(--slate-soft); color: var(--muted); opacity: 0.7; cursor: default; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tp-icon { color: var(--bg); } }
+:root[data-theme="dark"] .tp-icon { color: var(--bg); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tp-icon.is-off { color: var(--muted); } }
+:root[data-theme="dark"] .tp-icon.is-off { color: var(--muted); }
+.tp-icons + .tp-links { margin-top: 10px; }
+
+/* Team members: two columns on tablet and desktop */
+.tp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 720px) {
+  .tp-grid { grid-template-columns: 1fr; }
+  .pub-list li.has-thumb { grid-template-columns: 1fr; }
+  .pub-preview li.has-thumb { grid-template-columns: 1fr; }
+}
+
+/* A lone ongoing card with a picture: picture on the left, text on the right (wide screens) */
+.cards { container-type: inline-size; }
+@container (min-width: 720px) {
+  .card:only-child:has(.card-media) { display: grid; grid-template-columns: 360px 1fr; column-gap: 28px; row-gap: 12px; align-content: center; }
+  .card:only-child:has(.card-media) > :not(.card-media) { grid-column: 2; }
+  .card:only-child:has(.card-media) > .status { justify-self: start; }
+  .card:only-child:has(.card-media) > .card-media {
+    grid-column: 1; grid-row: 1 / span 6; align-self: stretch; height: auto; min-height: 240px;
+    width: calc(100% + 22px); margin: -22px 0 -20px -22px;
+  }
 }

@@ -52,6 +52,9 @@ window.SITE = {
       // "Topic one",
       // "Topic two"
     ],
+    // ---- Home page: background picture behind the hero banner (a file inside "images") ----
+    heroImage: "chip-design.svg",
+
     // ---- Home page: hero slider (3 slides work best). title "" = use the group name. ----
     heroSlides: [
       { intro: "welcome to", title: "", text: "Department of Electrical and Electronic Engineering, United International University", button: "Learn more", link: "#about" },
@@ -71,9 +74,9 @@ window.SITE = {
     researchIntro: "Our research centres on low-voltage, low-power analog circuit design. The main topics are:",
     // Cards link to the Ongoing Research page. "image" is optional: a file name inside the "images" folder.
     areas: [
-      { title: "Low-Power Analog Circuits", text: "Designing analog building blocks that operate at very low supply voltage and power.", image: "" },
-      { title: "Wearable Front-Ends", text: "Circuits that acquire and condition signals for compact, battery-powered wearable devices.", image: "" },
-      { title: "Low-Voltage Circuit Design", text: "Techniques such as current reuse that keep performance up while supply voltage goes down.", image: "" }
+      { title: "Low-Power Analog Circuits", text: "Designing analog building blocks that operate at very low supply voltage and power.", image: "area-low-power.svg" },
+      { title: "Wearable Front-Ends", text: "Circuits that acquire and condition signals for compact, battery-powered wearable devices.", image: "area-wearable.svg" },
+      { title: "Low-Voltage Circuit Design", text: "Techniques such as current reuse that keep performance up while supply voltage goes down.", image: "area-low-voltage.svg" }
     ],
 
     // ---- Home page: "Affiliations" (logos are optional: a file name inside "images") ----
@@ -91,7 +94,7 @@ window.SITE = {
 
     // ---- Team page banner ----
     teamSubtitle: "Researchers working on low-power analog circuit design.",
-    teamBanner: "",           // optional banner photo: a file name inside "images" (e.g. "team.jpg")
+    teamBanner: "team-banner.svg",   // picture behind "Meet the team": a file inside "images". Replace with a real team photo, e.g. "team.jpg"
 
     // Optional, off for now:
     showWhere: false          // true = show "Department..., University" above the title
@@ -112,7 +115,11 @@ window.SITE = {
     bio: [
       "Professor in the Department of Electrical and Electronic Engineering, United International University, and supervisor of this research group."
     ],
-    // Optional link buttons on the Team page, e.g. { label: "Google Scholar", url: "https://..." }
+    // Profile icons on the Team page (leave "" to show a greyed-out icon).
+    // TODO: replace these two with the exact profile addresses.
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Md.%20Iqbal%20Bahar%20Chowdhury%20United%20International%20University",
+    uiu: "https://www.uiu.ac.bd",
+    // Optional extra link buttons on the Team page, e.g. { label: "Google Scholar", url: "https://..." }
     links: [],
     photo: "ibcsir.jpg"       // file inside the "images" folder
   },
@@ -122,6 +129,8 @@ window.SITE = {
   //  3. MEMBERS  (the supervisor is added automatically at the top)
   //     Only "name" is required. role, bio, interest and photo can be "".
   //     "bio" is a short biography shown on the Team page (falls back to "interest").
+  //     Optional: linkedin: "https://www.linkedin.com/in/..." shows a LinkedIn icon (greyed out when empty).
+  //     Optional: uiu: "https://..." shows a UIU profile icon.
   //     Optional: links: [{ label: "ORCID", url: "https://..." }] adds link buttons to the profile.
   //     Optional: status: "alumni" moves the person to the Alumni list (name and role only).
   // ========================================================================
@@ -129,8 +138,17 @@ window.SITE = {
 
     // ---- Add new members ABOVE the template below (keep the comma) ----
 
+    // PLACEHOLDER MEMBERS: replace each "Member Name N" with the real name, role, biography,
+    // photo (a file in "images") and LinkedIn address. Delete any you do not need.
+    { name: "Member Name 1", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
+    { name: "Member Name 2", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
+    { name: "Member Name 3", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
+    { name: "Member Name 4", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
+    { name: "Member Name 5", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
+    { name: "Member Name 6", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
+
     // Template - copy it up here, then delete the // at the start of each line:
-    // { name: "Full name", role: "Research student", bio: "Two or three lines about the member.", links: [], interest: "One line about their research", photo: "full-name.jpg" },
+    // { name: "Full name", role: "Research student", bio: "Two or three lines about the member.", linkedin: "https://www.linkedin.com/in/...", links: [], interest: "One line about their research", photo: "full-name.jpg" },
 
   ],
 
@@ -147,7 +165,7 @@ window.SITE = {
 
     // ======================================================================
     //  4A. ONGOING PAPERS
-    //      Required: type, title.  Optional: status, description, authors, links.
+    //      Required: type, title.  Optional: status, description, image, authors, links.
     //      status examples: "Data collection", "Writing", "Under review"
     // ======================================================================
 
@@ -158,6 +176,7 @@ window.SITE = {
       title: "A 1-V Ultra-Low-Power Recycling Current-Reuse OTA for Wearable Analog Front-End Applications",
       status: "Writing",
       description: "Low-voltage, low-power analog circuit design for wearable front-end applications.",
+      image: "project-ota.svg",   // optional picture: a file inside "images"
       authors: ["Md. Iqbal Bahar Chowdhury", "Author name", "Author name"],
       links: []
     },
@@ -168,6 +187,7 @@ window.SITE = {
     //   title: "Paper title",
     //   status: "Writing",
     //   description: "One or two general lines about the topic. No methods or results before publication.",
+    //   image: "project-name.jpg",
     //   authors: ["Md. Iqbal Bahar Chowdhury", "Member name", "Member name"],
     //   links: []
     // },
@@ -175,11 +195,23 @@ window.SITE = {
 
     // ======================================================================
     //  4B. PUBLISHED PAPERS
-    //      Required: type, title, year.  Optional: venue, pages, authors, links.
-    //      None yet. They appear on the page, newest year first, once added.
+    //      Required: type, title, year.  Optional: venue, pages, image, authors, links.
+    //      They appear on the Publications page, newest year first.
     // ======================================================================
 
     // ---- Add new published papers ABOVE the template below (keep the comma) ----
+
+    // PLACEHOLDER: a sample entry so the Publications tab is not empty. Replace it with a real paper.
+    {
+      type: "published",
+      title: "Sample Published Paper Title",
+      venue: "Journal or Conference Name",
+      pages: "pp. 1-4",
+      year: 2026,
+      image: "publication-sample.svg",   // optional picture: a file inside "images"
+      authors: ["Md. Iqbal Bahar Chowdhury", "Author name"],
+      links: []
+    },
 
     // Template - copy it up here, then delete the // at the start of each line:
     // {
@@ -188,6 +220,7 @@ window.SITE = {
     //   venue: "Journal or conference name",
     //   pages: "pp. 1-4",
     //   year: 2027,
+    //   image: "paper-name.jpg",
     //   authors: ["Md. Iqbal Bahar Chowdhury", "Member name", "Member name"],
     //   links: [{ label: "DOI", url: "https://doi.org/..." }]
     // },
