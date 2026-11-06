@@ -8,7 +8,7 @@ The site has four pages. All of them are built from `data.js`:
 |------|------|---------|
 | Home | `index.html` | Sliding banner with live counters, about, our research, ongoing research, latest publications, affiliations, contact and join box |
 | Research -> Ongoing Research | `ongoing.html` | Ongoing papers |
-| Research -> Publications | `publications.html` | Published papers as cards (same style as Ongoing Research), newest first |
+| Research -> Publications | `publications.html` | ResearchGate-style list of published papers, newest first; the next papers load as you scroll; filter by type; Cite and Read more buttons |
 | Team | `team.html` | Banner, featured supervisor profile, member profiles (photo, name, designation, biography, links) and alumni |
 
 ---
@@ -90,7 +90,7 @@ A GitHub Action in this repository (`.github/workflows/preview.yml`) publishes t
 | `https://snromon27.github.io/UIU_EEE_Reseach_Website/main/` | The `main` branch (the approved site) |
 | `https://snromon27.github.io/UIU_EEE_Reseach_Website/subbranch_v5/` | One specific branch (replace the name) |
 
-**After every modification:** wait 1-2 minutes for the Action (Actions tab shows a green tick), open the `latest/` link, and press **Ctrl+Shift+R** (**Cmd+Shift+R** on Mac) to bypass the browser cache. Open `.../latest/preview-info.txt` to see which branch and commit is being shown.
+**After every modification:** wait for the Action and the Pages build to finish (usually 1 to 8 minutes; the Actions tab shows green ticks for **Publish website preview** and then **pages build and deployment**), open the `latest/` link, and press **Ctrl+Shift+R** (**Cmd+Shift+R** on Mac) to bypass the browser cache. Open `.../latest/preview-info.txt` to see which branch and commit is being shown.
 
 Notes:
 - Nothing is merged into `main` by this. Each branch only gets its own preview folder.
@@ -145,6 +145,8 @@ Notes:
   venue: "Journal or conference name",
   pages: "pp. 1-4",
   year: 2027,
+  date: "2027-03-15",
+  kind: "Journal article",
   description: "One or two short lines about the paper (shown on the cards).",
   image: "paper-name.jpg",
   authors: ["Md. Iqbal Bahar Chowdhury", "Member name"],
@@ -153,7 +155,9 @@ Notes:
 },
 ```
 
-On the website, each published paper is a card. Clicking anywhere on the card opens the paper's page on the publisher's site (the `url`) in a new tab. If `url` is empty, the card is not clickable.
+On the Publications page, each published paper is a row in a ResearchGate-style list: type badge, month and year, title (a link to the paper), venue, DOI, authors, a short description with Read more, and View paper / Cite buttons. `date` sets the exact order (newest first) and the month shown. `kind` (for example `"Journal article"`, `"Preprint"`, `"Conference paper"`) creates the filter on the left. `publicationsPerLoad` in the `GROUP` section sets how many papers appear at first and each time the visitor scrolls down (default 3). On the home page, the latest papers are shown as cards.
+
+The title and the View paper button open the paper's page on the publisher's site (the `url`) in a new tab. On the home page, clicking anywhere on a paper's card does the same. If `url` is empty, the paper is not clickable.
 
 - Leave anything you do not need empty: `""` or `[]`. Do not delete the field.
 - Required: `name` for a member; `type` and `title` for a paper; `year` as well for a published paper.

@@ -92,6 +92,9 @@ window.SITE = {
       button: "Get in touch"
     },
 
+    // ---- Publications page: how many papers appear at first and each time the visitor scrolls down ----
+    publicationsPerLoad: 3,
+
     // ---- Team page banner ----
     teamSubtitle: "Researchers working on low-power analog circuit design.",
     teamBanner: "team-banner.svg",   // picture behind "Meet the team": a file inside "images". Replace with a real team photo, e.g. "team.jpg"
@@ -194,7 +197,7 @@ window.SITE = {
 
     // ======================================================================
     //  4B. PUBLISHED PAPERS
-    //      Required: type, title, year.  Optional: venue, pages, description, image, authors, url, links.
+    //      Required: type, title, year.  Optional: date, kind, venue, pages, description, image, authors, url, links.
     //      They appear on the Publications page, newest year first.
     // ======================================================================
 
@@ -211,6 +214,8 @@ window.SITE = {
       venue: "Research Square (preprint, version 1)",
       pages: "",
       year: 2026,
+      date: "2026-10-14",
+      kind: "Preprint",
       description: "A low-voltage (0.6 V), low-power low-noise amplifier for 1.8-4.0 GHz wideband wireless systems, with a tunable bulk-driven pseudo-resistor feedback. Simulations show a 1.66 dB noise figure and 14.18 dB gain at 3.6 GHz while using 6 mW.",
       image: "paper-lna.svg",
       authors: ["Md. Iqbal Bahar Chowdhury", "Rifatuzzaman Apu", "Muhammad Johirul Islam", "Ho Soonmin"],
@@ -224,6 +229,8 @@ window.SITE = {
       venue: "Scientific Reports, vol. 16, no. 1",
       pages: "Art. 25554",
       year: 2026,
+      date: "2026-06-04",
+      kind: "Journal article",
       description: "Reduced graphene oxide (rGO) and NiCoFe2O4 nanocomposites made by sol\u2013gel auto-combustion and optimized for use in supercapacitors.",
       image: "paper-rgo.svg",
       authors: ["Sajid Naeem", "Novman Nabeel", "Prabhpreet Kaur", "Alok Jain", "Kailash Chandra Juglan", "Dilawar Husain", "Ho SoonMin", "Md. Iqbal Bahar Chowdhury"],
@@ -237,6 +244,8 @@ window.SITE = {
       venue: "ACS Applied Electronic Materials, vol. 8, no. 8",
       pages: "pp. 3530-3543",
       year: 2026,
+      date: "2026-04-13",
+      kind: "Journal article",
       description: "A vertical tunnel FET pH sensor that works at subpicowatt power and responds close to the ideal Nernstian limit, aimed at point-of-care diagnostics.",
       image: "paper-tfet.svg",
       authors: ["Muhammad Johirul Islam", "Md. Iqbal Bahar Chowdhury"],
@@ -250,6 +259,8 @@ window.SITE = {
       venue: "Electronics (MDPI), vol. 14, no. 22",
       pages: "Art. 4520",
       year: 2025,
+      date: "2025-11-19",
+      kind: "Journal article",
       description: "An ultra-low-power operational transconductance amplifier for batteryless biomedical front-ends. Post-layout simulations in 45 nm CMOS at 0.9 V show 49.3 nW power, 144.9 dB CMRR and a noise efficiency factor of 1.023.",
       image: "paper-ota.svg",
       authors: ["Md. Zubair Alam Emon", "Rifatuzzaman Apu", "Mohamed B. Elamien"],
@@ -264,6 +275,8 @@ window.SITE = {
     //   venue: "Journal or conference name",
     //   pages: "pp. 1-4",
     //   year: 2027,
+    //   date: "2027-03-15",              // optional, used for sorting and shown as month and year
+    //   kind: "Journal article",         // or "Preprint", "Conference paper", ... (used for the filter on the Publications page)
     //   description: "One or two short lines about the paper.",
     //   image: "paper-name.jpg",
     //   authors: ["Md. Iqbal Bahar Chowdhury", "Member name", "Member name"],

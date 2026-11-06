@@ -33,11 +33,26 @@
   </header>
 
   <main id="main">
-    <section class="section" id="published" aria-labelledby="h-published">
+    <section class="section pubs-page" aria-labelledby="h-published">
       <div class="wrap">
-        <h2 id="h-published">Published papers</h2>
-        <p class="section-note">Earlier publications from the group.</p>
-        <div class="cards pub-stack" id="published-list"></div>
+        <div class="pubs-head">
+          <h1 class="title-bar" id="h-published">Publications</h1>
+          <p class="section-note" id="pubs-count"></p>
+        </div>
+        <div class="pubs-layout">
+          <aside class="pubs-side" id="pubs-side" aria-label="Filter publications">
+            <p class="pubs-side-title">Show</p>
+            <div class="pubs-filters" id="pubs-filters" role="group" aria-label="Publication type"></div>
+          </aside>
+          <div class="pubs-main">
+            <ol class="pubs-list" id="pubs-list"></ol>
+            <div class="pubs-more">
+              <p class="pubs-status" id="pubs-status" role="status" aria-live="polite"></p>
+              <button class="btn btn-ghost" id="pubs-btn" type="button" hidden>Show more papers</button>
+              <div id="pubs-sentinel" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
