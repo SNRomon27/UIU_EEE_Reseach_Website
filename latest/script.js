@@ -191,9 +191,9 @@
       ]));
     });
   }
-  // Newest year first; papers from the same year keep the order of data.js.
-  var publishedSorted = published.map(function (p, i) { return { p: p, i: i }; })
-    .sort(function (a, b) { return (b.p.year - a.p.year) || (a.i - b.i); })
+  // Newest first (by "date" when given, otherwise by year); papers with the same date keep their order in data.js.
+  var publishedSorted = published.map(function (p, i) { return { p: p, i: i, k: p.date || (String(p.year) + "-00-00") }; })
+    .sort(function (a, b) { return b.k.localeCompare(a.k) || (a.i - b.i); })
     .map(function (x) { return x.p; });
 
   /* ---------- Small helpers for the new pages ---------- */
@@ -361,9 +361,156 @@
     ongoingCards($("#ongoing-list"), ongoing);
   }
 
-  /* ---------- Publications page (same card style as Ongoing Research) ---------- */
+  /* ---------- Publications page: ResearchGate-style list, more papers load as you scroll ---------- */
   if (page === "publications") {
-    publicationCards($("#published-list"), publishedSorted);
+    var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var kindOf = function (p) { return p.kind || "Journal article"; };
+    function pubWhen(p) {
+      var m = /^(\d{4})-(\d{2})/.exec(p.date || "");
+      return m ? MONTHS[Number(m[2]) - 1] + " " + m[1] : String(p.year || "");
+    }
+    function doiOf(p) {
+      var all = [p.url].concat((p.links || []).map(function (l) { return l && l.url; }));
+      for (var i = 0; i < all.length; i++) {
+        var m = /doi\.org\/(10\.\S+)/i.exec(String(all[i] || ""));
+        if (m) { return m[1]; }
+      }
+      return "";
+    }
+    function citation(p) {
+      var au = (p.authors || []).slice();
+      var names = au.length > 1 ? au.slice(0, -1).join(", ") + ", and " + au[au.length - 1] : (au[0] || "");
+      var venue = [p.venue, p.pages].filter(Boolean).join(", ");
+      var doi = doiOf(p);
+      return [names, "(" + (p.year || "") + ").", p.title + ".", venue ? venue + "." : "", doi ? "https://doi.org/" + doi : (safeUrl(p.url) || "")]
+        .filter(Boolean).join(" ");
+    }
+    function copyText(text, done) {
+      var fallback = function () {
+        var ta = el("textarea", { "aria-hidden": "true" });
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); } catch (e) { /* ignore */ }
+        document.body.removeChild(ta); done();
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, fallback); }
+      else { fallback(); }
+    }
+
+    function pubItem(p) {
+      var url = safeUrl(p.url);
+      var doi = doiOf(p);
+      var venue = [p.venue, p.pages].filter(Boolean).join(", ");
+      var thumb = imgSrc(p.image);
+
+      var title = el("h2", { class: "pub-name" }, [
+        url ? el("a", { href: url, target: "_blank", rel: "noopener", text: p.title }) : p.title
+      ]);
+
+      var descText = p.description ? el("p", { class: "pub-abs-text", text: p.description }) : null;
+      var moreBtn = el("button", { class: "pub-readmore", type: "button", "aria-expanded": "false", hidden: "" , text: "Read more" });
+      moreBtn.addEventListener("click", function () {
+        var open = descText.classList.toggle("is-open");
+        moreBtn.setAttribute("aria-expanded", String(open));
+        moreBtn.textContent = open ? "Show less" : "Read more";
+      });
+
+      var citeBtn = el("button", { class: "pub-btn", type: "button", text: "Cite" });
+      citeBtn.addEventListener("click", function () {
+        copyText(citation(p), function () {
+          citeBtn.textContent = "Citation copied";
+          setTimeout(function () { citeBtn.textContent = "Cite"; }, 2000);
+        });
+      });
+
+      var li = el("li", { class: "pub-item" }, [
+        el("div", { class: "pub-body" }, [
+          el("p", { class: "pub-kind" }, [el("span", { class: "pub-badge", text: kindOf(p) }), el("span", { class: "pub-when", text: pubWhen(p) })]),
+          title,
+          venue ? el("p", { class: "pub-where", text: venue }) : null,
+          doi ? el("p", { class: "pub-doi" }, ["DOI: ", el("a", { href: "https://doi.org/" + doi, target: "_blank", rel: "noopener", text: doi })]) : null,
+          el("p", { class: "pub-by" }, [authorList(p.authors)]),
+          descText ? el("div", { class: "pub-abs" }, [descText, moreBtn]) : null,
+          el("div", { class: "pub-actions" }, [
+            url ? el("a", { class: "pub-btn pub-btn-main", href: url, target: "_blank", rel: "noopener", text: "View paper" }) : null,
+            citeBtn
+          ])
+        ]),
+        thumb ? el("img", { class: "pub-thumb", src: thumb, alt: "", loading: "lazy" }) : null
+      ]);
+      li._descText = descText; li._moreBtn = moreBtn;
+      return li;
+    }
+
+    var perLoad = Math.max(1, parseInt(D.group.publicationsPerLoad, 10) || 3);
+    var listEl = $("#pubs-list"), statusEl = $("#pubs-status"), moreBtnEl = $("#pubs-btn"), sentinel = $("#pubs-sentinel");
+    var filtersEl = $("#pubs-filters");
+    var filtered = publishedSorted, shown = 0, currentKey = "all";
+
+    $("#pubs-count").textContent = publishedSorted.length
+      ? publishedSorted.length + (publishedSorted.length === 1 ? " publication" : " publications") + " by the group, newest first."
+      : "";
+
+    function updateStatus() {
+      if (!publishedSorted.length) {
+        statusEl.textContent = "The group's first publications will be listed here once they are published.";
+        moreBtnEl.hidden = true; return;
+      }
+      if (!filtered.length) { statusEl.textContent = "No publications in this category yet."; moreBtnEl.hidden = true; return; }
+      if (shown < filtered.length) {
+        statusEl.textContent = "Showing " + shown + " of " + filtered.length + " publications. Scroll down for more.";
+        moreBtnEl.hidden = false;
+      } else {
+        statusEl.textContent = "You have reached the end: all " + filtered.length + (filtered.length === 1 ? " publication is" : " publications are") + " shown.";
+        moreBtnEl.hidden = true;
+      }
+    }
+    function renderMore() {
+      var batch = filtered.slice(shown, shown + perLoad);
+      batch.forEach(function (p, i) {
+        var li = pubItem(p);
+        if (!reduced) { li.classList.add("is-new"); li.style.animationDelay = (i * 70) + "ms"; }
+        listEl.appendChild(li);
+        // Show "Read more" only when the description is longer than the 3 visible lines.
+        if (li._descText && li._descText.scrollHeight > li._descText.clientHeight + 1) { li._moreBtn.hidden = false; }
+      });
+      shown += batch.length;
+      updateStatus();
+    }
+    function setFilter(key) {
+      currentKey = key;
+      filtered = key === "all" ? publishedSorted : publishedSorted.filter(function (p) { return kindOf(p) === key; });
+      listEl.textContent = ""; shown = 0;
+      Array.prototype.forEach.call(filtersEl.children, function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-key") === key)); });
+      renderMore();
+      if (io) { io.unobserve(sentinel); io.observe(sentinel); }
+    }
+
+    // Filter buttons: All + one per publication type that exists
+    var counts = {}, order = [];
+    publishedSorted.forEach(function (p) { var k = kindOf(p); if (!counts[k]) { counts[k] = 0; order.push(k); } counts[k]++; });
+    if (order.length < 2) { $("#pubs-side").hidden = true; $(".pubs-layout").classList.add("no-side"); }
+    [["all", "All publications", publishedSorted.length]].concat(order.map(function (k) { return [k, k + "s", counts[k]]; })).forEach(function (f) {
+      var b = el("button", { class: "pubs-filter", type: "button", "data-key": f[0], "aria-pressed": f[0] === "all" ? "true" : "false" }, [
+        el("span", { text: f[1] }), el("span", { class: "pubs-filter-n", text: String(f[2]) })
+      ]);
+      b.addEventListener("click", function () { setFilter(f[0]); });
+      filtersEl.appendChild(b);
+    });
+
+    // Load the next set when the end of the list comes into view (the button is the fallback)
+    var io = null;
+    if ("IntersectionObserver" in window) {
+      io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting && shown < filtered.length) {
+          renderMore();
+          io.unobserve(sentinel); io.observe(sentinel);   // look again: the end may still be on screen
+        }
+      }, { rootMargin: "0px 0px 120px 0px" });
+      io.observe(sentinel);
+    }
+    moreBtnEl.addEventListener("click", renderMore);
+    setFilter("all");
   }
 
   /* ---------- Team page (TERRER-style profiles) ---------- */
