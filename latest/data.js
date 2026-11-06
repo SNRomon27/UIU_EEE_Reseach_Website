@@ -141,15 +141,15 @@ window.SITE = {
 
     // ---- Add new members ABOVE the template below (keep the comma) ----
 
-    // Members 3 to 6 have real names, LinkedIn addresses and emails. Still to add for them: role, biography and photo
-    // (a file in "images", for example photo: "samaun-romon.jpg"). Dipu Chandra Sarker's email is still empty.
-    // "Member Name 1" and "Member Name 2" are PLACEHOLDERS: replace the name, role, biography, photo and LinkedIn address.
+    // Members 2 to 6 have real names, photos (images/team) and LinkedIn addresses. Still to add for members 3 to 6:
+    // role and biography. Dipu Chandra Sarker's email is still empty.
+    // "Member Name 1" is a PLACEHOLDER: replace the name, role, biography, photo and LinkedIn address.
     { name: "Member Name 1", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
-    { name: "Member Name 2", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
-    { name: "M. Samaun Nour Romon", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/msamaun27/", email: "samaunnour27@gmail.com", photo: "" },
-    { name: "Md. Towhidur Rahaman Nahid", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/md-towhidur-rahaman-nahid-267653259/", email: "towhidnahidcf@gmail.com", photo: "" },
-    { name: "Md. Raghib Shahiriyar Hossen Rifat", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/raghib-shahiriyar/", email: "raghib2641@gmail.com", photo: "" },
-    { name: "Dipu Chandra Sarker", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/dipu-chandra-sarker-879900317/", email: "", photo: "" },
+    { name: "Rifatuzzaman Apu", role: "Research Assistant", bio: "Rifatuzzaman Apu received his B.Sc. degree in Electrical and Electronic Engineering from United International University (UIU), Bangladesh. He is currently working as a Research Assistant in the Department of Electrical and Electronic Engineering at UIU, specializing in CMOS analog and mixed-signal integrated circuit design.", linkedin: "https://www.linkedin.com/in/rifatuzzaman-apu-69230229a/", email: "rifatuzzamanapu@gmail.com", links: [{ label: "Google Scholar", url: "https://scholar.google.com/citations?user=FwOe0kAAAAAJ&hl=en" }], photo: "team/rifatuzzaman-apu.jpg" },
+    { name: "M. Samaun Nour Romon", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/msamaun27/", email: "samaunnour27@gmail.com", photo: "team/samaun-nour-romon.jpg" },
+    { name: "Md. Towhidur Rahaman Nahid", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/md-towhidur-rahaman-nahid-267653259/", email: "towhidnahidcf@gmail.com", photo: "team/towhidur-rahaman-nahid.jpg" },
+    { name: "Md. Raghib Shahiriyar Hossen Rifat", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/raghib-shahiriyar/", email: "raghib2641@gmail.com", photo: "team/raghib-shahiriyar-rifat.jpg" },
+    { name: "Dipu Chandra Sarker", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/dipu-chandra-sarker-879900317/", email: "", photo: "team/dipu-chandra-sarker.jpg" },
 
     // Template - copy it up here, then delete the // at the start of each line:
     // { name: "Full name", role: "Research student", bio: "Two or three lines about the member.", linkedin: "https://www.linkedin.com/in/...", links: [], interest: "One line about their research", photo: "full-name.jpg" },
