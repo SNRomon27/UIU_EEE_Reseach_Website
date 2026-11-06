@@ -82,7 +82,7 @@ window.SITE = {
     // ---- Home page: "Affiliations" (logos are optional: a file name inside "images") ----
     affiliations: [
       { name: "United International University", logo: "", url: "https://www.uiu.ac.bd" },
-      { name: "Department of Electrical and Electronic Engineering", logo: "", url: "" }
+      { name: "Department of Electrical and Electronic Engineering", logo: "", url: "https://eee.uiu.ac.bd/" }
     ],
 
     // ---- Home page: "Join the group" box next to the contact details ----
