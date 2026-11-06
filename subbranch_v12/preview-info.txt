@@ -1,0 +1,3 @@
+branch=subbranch_v12
+commit=2c236c8
+time=2026-11-06T19:52:30Z
