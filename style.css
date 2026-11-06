@@ -511,10 +511,10 @@ a.tp-icon:hover { background: var(--amber-btn); color: #1a0f05; transform: trans
 /* A lone ongoing card with a picture: picture on the left, text on the right (wide screens) */
 .cards { container-type: inline-size; }
 @container (min-width: 720px) {
-  .card:only-child:has(.card-media) { display: grid; grid-template-columns: 360px 1fr; column-gap: 28px; row-gap: 12px; align-content: center; }
-  .card:only-child:has(.card-media) > :not(.card-media) { grid-column: 2; }
-  .card:only-child:has(.card-media) > .status { justify-self: start; }
-  .card:only-child:has(.card-media) > .card-media {
+  .card:not(.pub-card):only-child:has(.card-media) { display: grid; grid-template-columns: 360px 1fr; column-gap: 28px; row-gap: 12px; align-content: center; }
+  .card:not(.pub-card):only-child:has(.card-media) > :not(.card-media) { grid-column: 2; }
+  .card:not(.pub-card):only-child:has(.card-media) > .status { justify-self: start; }
+  .card:not(.pub-card):only-child:has(.card-media) > .card-media {
     grid-column: 1; grid-row: 1 / span 6; align-self: stretch; height: auto; min-height: 240px;
     width: calc(100% + 22px); margin: -22px 0 -20px -22px;
   }
@@ -530,3 +530,15 @@ a.tp-icon:hover { background: var(--amber-btn); color: #1a0f05; transform: trans
 .card.is-clickable:has(.card-link:focus-visible) { outline: 3px solid var(--amber); outline-offset: 2px; }
 .card.is-clickable .card-link:focus-visible { outline: none; }
 .card.is-clickable .card-links { position: relative; z-index: 2; }
+
+/* Publications: one paper per row, picture on the left and text on the right (stacks on small screens) */
+.pub-stack { grid-template-columns: 1fr; gap: 24px; }
+.card.pub-card { padding: 0; gap: 0; }
+.pub-card .card-media { margin: 0; width: 100%; height: 210px; }
+.pub-card .card-body { padding: 22px 22px 20px; display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 0; }
+.pub-card .card-authors { margin-top: 4px; }
+@container (min-width: 720px) {
+  .pub-stack .pub-card { flex-direction: row; }
+  .pub-stack .pub-card .card-media { flex: none; width: 40%; max-width: 460px; min-width: 260px; height: auto; min-height: 250px; align-self: stretch; }
+  .pub-stack .pub-card .card-body { padding: 26px 30px; }
+}

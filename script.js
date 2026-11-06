@@ -178,14 +178,16 @@
             ])
           : p.title
       ]);
-      box.appendChild(el("article", { class: "card" + (url ? " is-clickable" : "") }, [
+      box.appendChild(el("article", { class: "card pub-card" + (url ? " is-clickable" : "") }, [
         cardImg ? el("img", { class: "card-media", src: cardImg, alt: "", loading: "lazy" }) : null,
-        p.year ? el("span", { class: "status status-year", text: String(p.year) }) : null,
-        heading,
-        venue ? el("p", { class: "card-venue", text: venue }) : null,
-        p.description ? el("p", { class: "card-desc", text: p.description }) : null,
-        links(p.links, "card-links"),
-        el("p", { class: "card-authors" }, [authorList(p.authors)])
+        el("div", { class: "card-body" }, [
+          p.year ? el("span", { class: "status status-year", text: String(p.year) }) : null,
+          heading,
+          venue ? el("p", { class: "card-venue", text: venue }) : null,
+          p.description ? el("p", { class: "card-desc", text: p.description }) : null,
+          links(p.links, "card-links"),
+          el("p", { class: "card-authors" }, [authorList(p.authors)])
+        ])
       ]));
     });
   }

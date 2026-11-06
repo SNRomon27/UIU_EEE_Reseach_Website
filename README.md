@@ -15,7 +15,7 @@ The site has four pages. All of them are built from `data.js`:
 
 ## How to open the website (step by step)
 
-The site is plain HTML, CSS and JavaScript. It needs no build step and no installation. Choose **Option A** (quickest), **Option B** (recommended for reviewing changes) or **Option C** (the live site on GitHub Pages).
+The site is plain HTML, CSS and JavaScript. It needs no build step and no installation. Choose **Option A** (quickest), **Option B** (runs on your own computer) or **Option C** (a permanent link in the browser that updates by itself).
 
 ### Option A: Open it directly from your computer
 
@@ -28,7 +28,7 @@ The site is plain HTML, CSS and JavaScript. It needs no build step and no instal
 
 Note: the site loads its fonts from Google Fonts, so an internet connection gives the best look. Without it, the page still works with fallback fonts.
 
-### Option B: Run a local web server (recommended)
+### Option B: Run a local web server
 
 A local server behaves exactly like the real website and is the best way to test every page.
 
@@ -69,16 +69,33 @@ A local server behaves exactly like the real website and is the best way to test
 
 After you edit `data.js` or any other file, save it and refresh the browser page (**Ctrl+R**, or **Ctrl+Shift+R** to bypass the cache).
 
-### Option C: Open the live website on GitHub Pages
+### Option C: Permanent preview link on GitHub Pages (recommended: set up once, never generate a link again)
 
-1. Open the repository on GitHub and go to **Settings** -> **Pages**.
-2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
-3. Choose the branch (`main` for the published site, or a review branch to preview changes) and the folder **`/ (root)`**, then click **Save**.
-4. Wait 1-2 minutes, then refresh the Pages settings screen. A banner shows the site address:
-   `https://snromon27.github.io/UIU_EEE_Reseach_Website/`
-5. Open that address in your browser.
+A GitHub Action in this repository (`.github/workflows/preview.yml`) publishes the website automatically every time any branch is pushed. The address never changes, so after each modification you only refresh the browser.
 
-Changes only appear on the live site after they are merged into the branch selected in step 3.
+**One-time setup (about 2 minutes):**
+
+1. Make sure at least one push has happened since the workflow was added. Open the repository -> **Actions** tab and check that **Publish website preview** has a green tick. This run creates a branch called `gh-pages`.
+2. Go to **Settings** -> **Pages**.
+3. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
+4. Set **Branch** to **`gh-pages`** and the folder to **`/ (root)`**, then click **Save**.
+5. If the Action shows a permission error: **Settings** -> **Actions** -> **General** -> **Workflow permissions** -> choose **Read and write permissions** -> **Save**, then re-run the Action (Actions tab -> the failed run -> **Re-run all jobs**).
+
+**Permanent links (these never change):**
+
+| Link | Shows |
+|------|-------|
+| `https://snromon27.github.io/UIU_EEE_Reseach_Website/latest/` | The most recently pushed version (use this one) |
+| `https://snromon27.github.io/UIU_EEE_Reseach_Website/` | A list of every branch with its publish time |
+| `https://snromon27.github.io/UIU_EEE_Reseach_Website/main/` | The `main` branch (the approved site) |
+| `https://snromon27.github.io/UIU_EEE_Reseach_Website/subbranch_v5/` | One specific branch (replace the name) |
+
+**After every modification:** wait 1-2 minutes for the Action (Actions tab shows a green tick), open the `latest/` link, and press **Ctrl+Shift+R** (**Cmd+Shift+R** on Mac) to bypass the browser cache. Open `.../latest/preview-info.txt` to see which branch and commit is being shown.
+
+Notes:
+- Nothing is merged into `main` by this. Each branch only gets its own preview folder.
+- The preview site lives in the `gh-pages` branch. Never edit that branch by hand.
+- A repository on a free GitHub plan needs to be public for GitHub Pages. If the Pages setting is greyed out, check **Settings** -> **General** -> visibility.
 
 ### Troubleshooting
 

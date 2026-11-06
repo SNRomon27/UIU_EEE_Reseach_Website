@@ -1,0 +1,31 @@
+# Publishes every pushed branch to a permanent preview site (the "gh-pages" branch).
+# One-time setup: Settings -> Pages -> Deploy from a branch -> gh-pages, folder / (root).
+# Then the latest version is always at:  https://<owner>.github.io/<repo>/latest/
+name: Publish website preview
+
+on:
+  push:
+    branches-ignore:
+      - gh-pages
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the branch
+        uses: actions/checkout@v4
+
+      - name: Publish this branch to the preview site
+        env:
+          REMOTE_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+          BRANCH_NAME: ${{ github.ref_name }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: bash .github/scripts/publish-preview.sh

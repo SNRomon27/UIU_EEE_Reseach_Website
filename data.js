@@ -220,6 +220,19 @@ window.SITE = {
 
     {
       type: "published",
+      title: "Optimized rGO/NiCoFe2O4 nanocomposites synthesized via sol\u2013gel auto-combustion for supercapacitor applications",
+      venue: "Scientific Reports, vol. 16, no. 1",
+      pages: "Art. 25554",
+      year: 2026,
+      description: "Reduced graphene oxide (rGO) and NiCoFe2O4 nanocomposites made by sol\u2013gel auto-combustion and optimized for use in supercapacitors.",
+      image: "paper-rgo.svg",
+      authors: ["Sajid Naeem", "Novman Nabeel", "Prabhpreet Kaur", "Alok Jain", "Kailash Chandra Juglan", "Dilawar Husain", "Ho SoonMin", "Md. Iqbal Bahar Chowdhury"],
+      url: "https://doi.org/10.1038/s41598-026-56424-6",
+      links: [{ label: "DOI", url: "https://doi.org/10.1038/s41598-026-56424-6" }]
+    },
+
+    {
+      type: "published",
       title: "A Subpicowatt Vertical Tunnel FET pH Sensor with Near-Nernstian Sensitivity for Point-of-Care Diagnostics",
       venue: "ACS Applied Electronic Materials, vol. 8, no. 8",
       pages: "pp. 3530-3543",
