@@ -194,22 +194,54 @@ window.SITE = {
 
     // ======================================================================
     //  4B. PUBLISHED PAPERS
-    //      Required: type, title, year.  Optional: venue, pages, image, authors, links.
+    //      Required: type, title, year.  Optional: venue, pages, description, image, authors, url, links.
     //      They appear on the Publications page, newest year first.
     // ======================================================================
 
     // ---- Add new published papers ABOVE the template below (keep the comma) ----
 
-    // PLACEHOLDER: a sample entry so the Publications tab is not empty. Replace it with a real paper.
+    // Newest first. "url" is where a click on the paper's card goes (the publisher's page, via its DOI).
+    // "description" is the short text shown on the cards (home page and Publications page).
+    // Details below were checked against each paper's DOI record (Crossref).
+
+    // Research Square PREPRINT (version 1, not yet in a journal).
     {
       type: "published",
-      title: "Sample Published Paper Title",
-      venue: "Journal or Conference Name",
-      pages: "pp. 1-4",
+      title: "A BDPR-Feedback-Based LNA with Programmable RF Metrics in Real-World Settings for Wideband Wireless Communication Systems",
+      venue: "Research Square (preprint, version 1)",
+      pages: "",
       year: 2026,
-      image: "publication-sample.svg",   // optional picture: a file inside "images"
-      authors: ["Md. Iqbal Bahar Chowdhury", "Author name"],
-      links: []
+      description: "A low-voltage (0.6 V), low-power low-noise amplifier for 1.8-4.0 GHz wideband wireless systems, with a tunable bulk-driven pseudo-resistor feedback. Simulations show a 1.66 dB noise figure and 14.18 dB gain at 3.6 GHz while using 6 mW.",
+      image: "paper-lna.svg",
+      authors: ["Md. Iqbal Bahar Chowdhury", "Rifatuzzaman Apu", "Muhammad Johirul Islam", "Ho Soonmin"],
+      url: "https://doi.org/10.21203/rs.3.rs-11078284/v1",
+      links: [{ label: "DOI", url: "https://doi.org/10.21203/rs.3.rs-11078284/v1" }]
+    },
+
+    {
+      type: "published",
+      title: "A Subpicowatt Vertical Tunnel FET pH Sensor with Near-Nernstian Sensitivity for Point-of-Care Diagnostics",
+      venue: "ACS Applied Electronic Materials, vol. 8, no. 8",
+      pages: "pp. 3530-3543",
+      year: 2026,
+      description: "A vertical tunnel FET pH sensor that works at subpicowatt power and responds close to the ideal Nernstian limit, aimed at point-of-care diagnostics.",
+      image: "paper-tfet.svg",
+      authors: ["Muhammad Johirul Islam", "Md. Iqbal Bahar Chowdhury"],
+      url: "https://doi.org/10.1021/acsaelm.6c00117",
+      links: [{ label: "DOI", url: "https://doi.org/10.1021/acsaelm.6c00117" }]
+    },
+
+    {
+      type: "published",
+      title: "A 0.9 V, Ultra-Low-Power OTA with Low NEF and High CMRR for Batteryless Biomedical Front-Ends",
+      venue: "Electronics (MDPI), vol. 14, no. 22",
+      pages: "Art. 4520",
+      year: 2025,
+      description: "An ultra-low-power operational transconductance amplifier for batteryless biomedical front-ends. Post-layout simulations in 45 nm CMOS at 0.9 V show 49.3 nW power, 144.9 dB CMRR and a noise efficiency factor of 1.023.",
+      image: "paper-ota.svg",
+      authors: ["Md. Zubair Alam Emon", "Rifatuzzaman Apu", "Mohamed B. Elamien"],
+      url: "https://doi.org/10.3390/electronics14224520",
+      links: [{ label: "DOI", url: "https://doi.org/10.3390/electronics14224520" }]
     },
 
     // Template - copy it up here, then delete the // at the start of each line:
@@ -219,8 +251,10 @@ window.SITE = {
     //   venue: "Journal or conference name",
     //   pages: "pp. 1-4",
     //   year: 2027,
+    //   description: "One or two short lines about the paper.",
     //   image: "paper-name.jpg",
     //   authors: ["Md. Iqbal Bahar Chowdhury", "Member name", "Member name"],
+    //   url: "https://doi.org/...",   // where a click on the card goes (publisher's page)
     //   links: [{ label: "DOI", url: "https://doi.org/..." }]
     // },
 

@@ -160,7 +160,8 @@
     });
   }
 
-  // Published papers use the same card as ongoing research: picture, year badge, title, venue, links, authors.
+  // Published papers use the same card as ongoing research: picture, year badge, title, venue, description, links, authors.
+  // If a paper has a "url", the whole card opens the publisher's page (new tab).
   function publicationCards(box, list) {
     if (!list.length) {
       box.appendChild(el("p", { class: "empty", text: "The group's first publications will be listed here once they are published." }));
@@ -168,11 +169,21 @@
     list.forEach(function (p) {
       var venue = [p.venue, p.pages].filter(Boolean).join(", ");
       var cardImg = imgSrc(p.image);
-      box.appendChild(el("article", { class: "card" }, [
+      var url = safeUrl(p.url);
+      var heading = el("h3", {}, [
+        url
+          ? el("a", { class: "card-link", href: url, target: "_blank", rel: "noopener" }, [
+              p.title,
+              el("span", { class: "sr-only", text: " (opens the paper on the publisher's site in a new tab)" })
+            ])
+          : p.title
+      ]);
+      box.appendChild(el("article", { class: "card" + (url ? " is-clickable" : "") }, [
         cardImg ? el("img", { class: "card-media", src: cardImg, alt: "", loading: "lazy" }) : null,
         p.year ? el("span", { class: "status status-year", text: String(p.year) }) : null,
-        el("h3", { text: p.title }),
-        venue ? el("p", { class: "card-desc", text: venue }) : null,
+        heading,
+        venue ? el("p", { class: "card-venue", text: venue }) : null,
+        p.description ? el("p", { class: "card-desc", text: p.description }) : null,
         links(p.links, "card-links"),
         el("p", { class: "card-authors" }, [authorList(p.authors)])
       ]));

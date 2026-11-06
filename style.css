@@ -519,3 +519,14 @@ a.tp-icon:hover { background: var(--amber-btn); color: #1a0f05; transform: trans
     width: calc(100% + 22px); margin: -22px 0 -20px -22px;
   }
 }
+
+/* Publication cards: venue line, and the whole card is a link to the paper when it has a "url" */
+.card-venue { color: var(--muted); font-size: 0.92rem; font-style: italic; margin-top: -4px; }
+.card.is-clickable { position: relative; transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s; }
+.card.is-clickable:hover { transform: translateY(-3px); border-color: var(--amber); box-shadow: 0 12px 24px rgba(15, 27, 39, 0.1); }
+.card-link { color: inherit; text-decoration: none; }
+.card-link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.card-link:hover { color: var(--amber-text); }
+.card.is-clickable:has(.card-link:focus-visible) { outline: 3px solid var(--amber); outline-offset: 2px; }
+.card.is-clickable .card-link:focus-visible { outline: none; }
+.card.is-clickable .card-links { position: relative; z-index: 2; }

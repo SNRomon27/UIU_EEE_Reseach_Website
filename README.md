@@ -128,10 +128,15 @@ Changes only appear on the live site after they are merged into the branch selec
   venue: "Journal or conference name",
   pages: "pp. 1-4",
   year: 2027,
+  description: "One or two short lines about the paper (shown on the cards).",
+  image: "paper-name.jpg",
   authors: ["Md. Iqbal Bahar Chowdhury", "Member name"],
+  url: "https://doi.org/...",
   links: [{ label: "DOI", url: "https://doi.org/..." }]
 },
 ```
+
+On the website, each published paper is a card. Clicking anywhere on the card opens the paper's page on the publisher's site (the `url`) in a new tab. If `url` is empty, the card is not clickable.
 
 - Leave anything you do not need empty: `""` or `[]`. Do not delete the field.
 - Required: `name` for a member; `type` and `title` for a paper; `year` as well for a published paper.
@@ -150,7 +155,7 @@ Changes only appear on the live site after they are merged into the branch selec
   - `teamBanner`: the picture behind "Meet the team". The supplied `team-banner.svg` is an illustration; replace it with a real team photo (for example `team.jpg`).
 - **Team page** text: `teamSubtitle` in the `GROUP` section; the supervisor's `bio` (one text or a list of paragraphs) in the `SUPERVISOR` section; each member's `bio` in the `MEMBERS` section.
 - **Profile icons:** every profile shows a LinkedIn icon (`linkedin: "https://www.linkedin.com/in/..."`). The supervisor also has a UIU profile icon (`uiu`). An empty address shows a greyed-out icon.
-- **Placeholders:** `Member Name 1` to `Member Name 6` and the sample published paper are placeholders. Replace them with real information.
+- **Placeholders:** `Member Name 1` to `Member Name 6` are placeholders. Replace them with real information.
 - To add link buttons (for example ORCID or Google Scholar) to a profile: `links: [{ label: "ORCID", url: "https://orcid.org/..." }]`.
 
 ---
