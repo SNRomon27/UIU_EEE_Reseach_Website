@@ -117,7 +117,7 @@ window.SITE = {
     ],
     // Profile icons on the Team page (leave "" to show a greyed-out icon).
     // TODO: replace these two with the exact profile addresses.
-    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Md.%20Iqbal%20Bahar%20Chowdhury%20United%20International%20University",
+    linkedin: "https://www.linkedin.com/in/dr-md-iqbal-bahar-chowdhury-b307021b/",
     uiu: "https://www.uiu.ac.bd",
     // Optional extra link buttons on the Team page, e.g. { label: "Google Scholar", url: "https://..." }
     links: [],
