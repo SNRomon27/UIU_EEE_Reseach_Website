@@ -217,7 +217,7 @@ window.SITE = {
       date: "2026-10-14",
       kind: "Preprint",
       description: "A low-voltage (0.6 V), low-power low-noise amplifier for 1.8-4.0 GHz wideband wireless systems, with a tunable bulk-driven pseudo-resistor feedback. Simulations show a 1.66 dB noise figure and 14.18 dB gain at 3.6 GHz while using 6 mW.",
-      image: "",   // TODO: first page of this paper, saved as images/papers/researchsquare-bdpr-lna.jpg
+      image: "papers/researchsquare-bdpr-lna.jpg",   // first page of the preprint
       authors: ["Md. Iqbal Bahar Chowdhury", "Rifatuzzaman Apu", "Muhammad Johirul Islam", "Ho Soonmin"],
       url: "https://doi.org/10.21203/rs.3.rs-11078284/v1",
       links: [{ label: "DOI", url: "https://doi.org/10.21203/rs.3.rs-11078284/v1" }]
@@ -231,8 +231,8 @@ window.SITE = {
       year: 2026,
       date: "2026-06-04",
       kind: "Journal article",
-      description: "Reduced graphene oxide (rGO) and NiCoFe2O4 nanocomposites made by sol\u2013gel auto-combustion and optimized for use in supercapacitors.",
-      image: "",   // TODO: first page of this paper, saved as images/papers/scientific-reports-rgo-nicofe2o4.jpg
+      description: "Composition-tuned rGO/NiCoFe2O4 nanocomposites made by a modified Hummers' method and sol\u2013gel auto-combustion. In 3 M KOH the optimized RNC80 sample reaches a specific capacitance of 275 F/g (GCD) and 250 F/g (CV).",
+      image: "papers/scientific-reports-rgo-nicofe2o4.jpg",   // first page of the paper
       authors: ["Sajid Naeem", "Novman Nabeel", "Prabhpreet Kaur", "Alok Jain", "Kailash Chandra Juglan", "Dilawar Husain", "Ho SoonMin", "Md. Iqbal Bahar Chowdhury"],
       url: "https://doi.org/10.1038/s41598-026-56424-6",
       links: [{ label: "DOI", url: "https://doi.org/10.1038/s41598-026-56424-6" }]
@@ -247,7 +247,8 @@ window.SITE = {
       date: "2026-04-13",
       kind: "Journal article",
       description: "A vertical tunnel FET pH sensor that works at subpicowatt power and responds close to the ideal Nernstian limit, aimed at point-of-care diagnostics.",
-      image: "",   // TODO: first page of this paper, saved as images/papers/acs-aem-tunnel-fet-ph-sensor.jpg
+      image: "papers/acs-aem-tunnel-fet-ph-sensor.jpg",   // figures from the paper's supporting information (the paper PDF was not available)
+      imageAlt: "Device schematic, circuit and simulation plots from the paper's supporting information",   // optional description of the picture for screen readers
       authors: ["Muhammad Johirul Islam", "Md. Iqbal Bahar Chowdhury"],
       url: "https://doi.org/10.1021/acsaelm.6c00117",
       links: [{ label: "DOI", url: "https://doi.org/10.1021/acsaelm.6c00117" }]
@@ -262,7 +263,7 @@ window.SITE = {
       date: "2025-11-19",
       kind: "Journal article",
       description: "An ultra-low-power operational transconductance amplifier for batteryless biomedical front-ends. Post-layout simulations in 45 nm CMOS at 0.9 V show 49.3 nW power, 144.9 dB CMRR and a noise efficiency factor of 1.023.",
-      image: "",   // TODO: first page of this paper, saved as images/papers/electronics-ota-batteryless.jpg
+      image: "papers/electronics-ota-batteryless.jpg",   // first page of the paper
       authors: ["Md. Zubair Alam Emon", "Rifatuzzaman Apu", "Mohamed B. Elamien"],
       url: "https://doi.org/10.3390/electronics14224520",
       links: [{ label: "DOI", url: "https://doi.org/10.3390/electronics14224520" }]
@@ -279,6 +280,7 @@ window.SITE = {
     //   kind: "Journal article",         // or "Preprint", "Conference paper", ... (used for the filter on the Publications page)
     //   description: "One or two short lines about the paper.",
     //   image: "papers/paper-name.jpg",   // thumbnail of the first page of the paper (optional)
+    //   imageAlt: "First page of the paper",   // optional: what the picture shows, for screen readers
     //   authors: ["Md. Iqbal Bahar Chowdhury", "Member name", "Member name"],
     //   url: "https://doi.org/...",   // where a click on the card goes (publisher's page)
     //   links: [{ label: "DOI", url: "https://doi.org/..." }]
