@@ -148,7 +148,7 @@ Notes:
   date: "2027-03-15",
   kind: "Journal article",
   description: "One or two short lines about the paper (shown on the cards).",
-  image: "paper-name.jpg",
+  image: "papers/paper-name.jpg",
   authors: ["Md. Iqbal Bahar Chowdhury", "Member name"],
   url: "https://doi.org/...",
   links: [{ label: "DOI", url: "https://doi.org/..." }]
@@ -172,7 +172,8 @@ The title and the View paper button open the paper's page on the publisher's sit
   - The three counters over the banner (Publications, Research members, Ongoing projects) are counted automatically.
 - **Pictures:** put the picture file in the `images` folder and write its exact file name in `data.js`.
   - `heroImage` (GROUP section): the chip-design picture behind the home page banner.
-  - `image` on each ongoing paper, published paper and research area: the picture shown with it. It is optional.
+  - `image` on each ongoing paper and research area: the picture shown with it. It is optional.
+  - `image` on each published paper: the thumbnail of the paper's first page, shown on the right of the paper (like ResearchGate). See "Adding a paper thumbnail" below.
   - `teamBanner`: the picture behind "Meet the team". The supplied `team-banner.svg` is an illustration; replace it with a real team photo (for example `team.jpg`).
 - **Team page** text: `teamSubtitle` in the `GROUP` section; the supervisor's `bio` (one text or a list of paragraphs) in the `SUPERVISOR` section; each member's `bio` in the `MEMBERS` section.
 - **Profile icons:** every profile shows a LinkedIn icon (`linkedin: "https://www.linkedin.com/in/..."`). The supervisor also has a UIU profile icon (`uiu`). An empty address shows a greyed-out icon.
@@ -188,6 +189,26 @@ The title and the View paper button open the paper's page on the publisher's sit
 3. In `data.js`, write **exactly the same file name**: `photo: "rahim-hasan.jpg"`.
 
 If the photo does not appear, the file name does not match (`.JPG` and `.jpg` are different). The person's initials are shown instead.
+
+---
+
+## Adding a paper thumbnail (first page of the paper)
+
+Each published paper can show a small picture of its first page on the right, like ResearchGate.
+
+1. Get the paper as a PDF (from the publisher, or your own copy).
+2. Make a picture of page 1. Either take a screenshot of the first page, or on a computer with `poppler-utils` run:
+
+   ```bash
+   pdftoppm -jpeg -r 70 -f 1 -l 1 -singlefile paper.pdf first-page
+   ```
+
+   This creates `first-page.jpg`.
+3. Rename it in lowercase with no spaces, for example `electronics-ota-batteryless.jpg`, and keep it under 200 KB.
+4. Upload it to the `images/papers` folder on GitHub (**Add file** -> **Upload files**).
+5. In `data.js`, set the paper's `image` to `"papers/electronics-ota-batteryless.jpg"` (same name, with `papers/` in front).
+
+If the file name does not match, the paper simply shows without a thumbnail.
 
 ---
 
