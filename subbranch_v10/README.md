@@ -122,7 +122,7 @@ Notes:
 
 **Member**
 ```js
-{ name: "Full name", role: "Research student", bio: "Two or three lines about the member.", interest: "One line about your research", photo: "full-name.jpg" },
+{ name: "Full name", role: "Research student", bio: "Two or three lines about the member.", linkedin: "https://www.linkedin.com/in/...", email: "", photo: "full-name.jpg" },
 ```
 
 **Ongoing paper**
@@ -176,6 +176,7 @@ The title and the View paper button open the paper's page on the publisher's sit
   - `image` on each published paper: the thumbnail of the paper's first page, shown on the right of the paper (like ResearchGate). See "Adding a paper thumbnail" below.
   - `teamBanner`: the picture behind "Meet the team". The supplied `team-banner.svg` is an illustration; replace it with a real team photo (for example `team.jpg`).
 - **Team page** text: `teamSubtitle` in the `GROUP` section; the supervisor's `bio` (one text or a list of paragraphs) in the `SUPERVISOR` section; each member's `bio` in the `MEMBERS` section.
+- **Email icon:** a member with an `email` shows an envelope icon next to LinkedIn. This repository is public, so only add an address the member agrees to show; leave `email` empty otherwise.
 - **Profile icons:** every profile shows a LinkedIn icon (`linkedin: "https://www.linkedin.com/in/..."`). The supervisor also has a UIU profile icon (`uiu`). An empty address shows a greyed-out icon.
 - **Placeholders:** `Member Name 1` to `Member Name 6` are placeholders. Replace them with real information.
 - To add link buttons (for example ORCID or Google Scholar) to a profile: `links: [{ label: "ORCID", url: "https://orcid.org/..." }]`.
