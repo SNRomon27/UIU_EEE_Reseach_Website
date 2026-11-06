@@ -210,6 +210,8 @@ Each published paper can show a small picture of its first page on the right, li
 
 If the file name does not match, the paper simply shows without a thumbnail.
 
+If you do not have the paper's PDF, you can use a figure from the paper instead. Add `imageAlt: "Short description of the picture"` to the paper in `data.js` so screen readers describe it correctly.
+
 ---
 
 ## Rules

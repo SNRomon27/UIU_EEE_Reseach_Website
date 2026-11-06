@@ -252,7 +252,7 @@
           citeBtn
         ])
       ]),
-      thumb ? el("img", { class: "pub-thumb", src: thumb, alt: "First page of the paper", loading: "lazy" }) : null
+      thumb ? el("img", { class: "pub-thumb", src: thumb, alt: p.imageAlt || "First page of the paper", loading: "lazy" }) : null
     ]);
     var thumbEl = li.querySelector(".pub-thumb");
     if (thumbEl) { thumbEl.addEventListener("error", function () { thumbEl.remove(); }); }
