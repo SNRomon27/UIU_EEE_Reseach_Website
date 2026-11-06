@@ -116,9 +116,8 @@ window.SITE = {
       "Professor in the Department of Electrical and Electronic Engineering, United International University, and supervisor of this research group."
     ],
     // Profile icons on the Team page (leave "" to show a greyed-out icon).
-    // TODO: replace these two with the exact profile addresses.
-    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Md.%20Iqbal%20Bahar%20Chowdhury%20United%20International%20University",
-    uiu: "https://www.uiu.ac.bd",
+    linkedin: "https://www.linkedin.com/in/dr-md-iqbal-bahar-chowdhury-b307021b/",
+    uiu: "https://eee.uiu.ac.bd/faculty/iqbal/",
     // Optional extra link buttons on the Team page, e.g. { label: "Google Scholar", url: "https://..." }
     links: [],
     photo: "ibcsir.jpg"       // file inside the "images" folder
