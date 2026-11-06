@@ -48,7 +48,12 @@
   function visible(x) { return x && x.hidden !== true; }
 
   function initials(name) {
-    var parts = String(name || "").replace(/^Dr\.?\s+/i, "").split(/\s+/).filter(Boolean);
+    var cleaned = String(name || "");
+    // Skip titles and short forms such as "Dr.", "Md." and "M." so "Md. Towhidur Rahaman Nahid" gives "TN".
+    while (/^(?:Md|Mr|Ms|Mrs|Mst|Dr|Prof)\.?\s+/i.test(cleaned) || /^M\.\s+/.test(cleaned)) {
+      cleaned = cleaned.replace(/^(?:(?:Md|Mr|Ms|Mrs|Mst|Dr|Prof)\.?|M\.)\s+/i, "");
+    }
+    var parts = cleaned.split(/\s+/).filter(Boolean);
     if (!parts.length) { return "?"; }
     var first = parts[0].charAt(0);
     var last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : "";
@@ -525,7 +530,8 @@
   var SVG_NS = "http://www.w3.org/2000/svg";
   var ICONS = {
     linkedin: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
-    uiu: "M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"
+    uiu: "M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z",
+    email: "M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
   };
   function iconSvg(kind) {
     var svg = document.createElementNS(SVG_NS, "svg");
@@ -542,11 +548,15 @@
   function profileIcons(o) {
     var kinds = [["linkedin", "LinkedIn", o.linkedin]];
     if (Object.prototype.hasOwnProperty.call(o, "uiu")) { kinds.push(["uiu", "UIU profile", o.uiu]); }
+    // Email icon only when a valid address is given (nothing is shown otherwise).
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(o.email || ""))) { kinds.push(["email", "Email", "mailto:" + o.email]); }
     return el("div", { class: "tp-icons" }, kinds.map(function (k) {
-      var url = safeUrl(k[2]);
-      var label = k[1] + " of " + o.name;
+      var isMail = k[0] === "email";
+      var url = isMail ? k[2] : safeUrl(k[2]);
+      var label = k[1] + (k[0] === "email" ? " " : " of ") + o.name;
       if (url) {
-        var a = el("a", { class: "tp-icon is-" + k[0], href: url, target: "_blank", rel: "noopener", "aria-label": label, title: k[1] });
+        var a = el("a", { class: "tp-icon is-" + k[0], href: url, "aria-label": label, title: isMail ? o.email : k[1] });
+        if (!isMail) { a.setAttribute("target", "_blank"); a.setAttribute("rel", "noopener"); }
         a.appendChild(iconSvg(k[0]));
         return a;
       }

@@ -132,6 +132,7 @@ window.SITE = {
   //     Only "name" is required. role, bio, interest and photo can be "".
   //     "bio" is a short biography shown on the Team page (falls back to "interest").
   //     Optional: linkedin: "https://www.linkedin.com/in/..." shows a LinkedIn icon (greyed out when empty).
+  //     Optional: email: "name@example.com" shows an email icon (hidden when empty). This repository is PUBLIC.
   //     Optional: uiu: "https://..." shows a UIU profile icon.
   //     Optional: links: [{ label: "ORCID", url: "https://..." }] adds link buttons to the profile.
   //     Optional: status: "alumni" moves the person to the Alumni list (name and role only).
@@ -140,14 +141,15 @@ window.SITE = {
 
     // ---- Add new members ABOVE the template below (keep the comma) ----
 
-    // PLACEHOLDER MEMBERS: replace each "Member Name N" with the real name, role, biography,
-    // photo (a file in "images") and LinkedIn address. Delete any you do not need.
+    // Members 3 to 6 have real names, LinkedIn addresses and emails. Still to add for them: role, biography and photo
+    // (a file in "images", for example photo: "samaun-romon.jpg"). Dipu Chandra Sarker's email is still empty.
+    // "Member Name 1" and "Member Name 2" are PLACEHOLDERS: replace the name, role, biography, photo and LinkedIn address.
     { name: "Member Name 1", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
     { name: "Member Name 2", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
-    { name: "Member Name 3", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
-    { name: "Member Name 4", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
-    { name: "Member Name 5", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
-    { name: "Member Name 6", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "", photo: "" },
+    { name: "M. Samaun Nour Romon", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/msamaun27/", email: "samaunnour27@gmail.com", photo: "" },
+    { name: "Md. Towhidur Rahaman Nahid", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/md-towhidur-rahaman-nahid-267653259/", email: "towhidnahidcf@gmail.com", photo: "" },
+    { name: "Md. Raghib Shahiriyar Hossen Rifat", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/raghib-shahiriyar/", email: "raghib2641@gmail.com", photo: "" },
+    { name: "Dipu Chandra Sarker", role: "Research Student", bio: "Short biography to be added: academic background, research interests and current work.", linkedin: "https://www.linkedin.com/in/dipu-chandra-sarker-879900317/", email: "", photo: "" },
 
     // Template - copy it up here, then delete the // at the start of each line:
     // { name: "Full name", role: "Research student", bio: "Two or three lines about the member.", linkedin: "https://www.linkedin.com/in/...", links: [], interest: "One line about their research", photo: "full-name.jpg" },
