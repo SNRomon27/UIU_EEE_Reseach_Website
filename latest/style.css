@@ -406,7 +406,11 @@ a:hover { text-decoration-thickness: 2px; }
 .tp-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .tp-ph { display: grid; place-items: center; background: var(--amber-soft); color: var(--amber-text); font-family: var(--serif); font-weight: 700; font-size: 2.1rem; }
 .tp-feat .tp-photo, .tp-feat .tp-ph { width: 168px; height: 168px; }
-.tp-card .tp-photo, .tp-card .tp-ph { width: 104px; height: 104px; font-size: 1.7rem; }
+.tp-card .tp-photo, .tp-card .tp-ph { width: 104px; font-size: 1.7rem; }
+.tp-card .tp-ph { height: 104px; }
+/* A member photo keeps its own proportions: square pictures stay square, a full portrait is shown whole (not cropped). */
+.tp-card .tp-photo { height: auto; }
+.tp-card .tp-photo img { height: auto; }
 .tp-feat-b { min-width: 0; }
 .tp-name { font-family: var(--serif); font-weight: 600; font-size: 1.5rem; color: var(--ink); line-height: 1.2; }
 .tp-card .tp-name { font-size: 1.15rem; }
@@ -596,3 +600,6 @@ a.tp-icon:hover { background: var(--amber-btn); color: #1a0f05; transform: trans
   .pub-item .pub-name { font-size: 1.15rem; }
 }
 @media (prefers-reduced-motion: reduce) { .pub-item.is-new { animation: none; } }
+
+/* Team cards keep their own height (biographies differ a lot in length) instead of stretching to the tallest card in the row */
+.tp-grid { align-items: start; }
